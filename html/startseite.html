@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Lumina – Insel wählen</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <main class="world-screen">
+    <!-- OBERE LEISTE: Lichtpunkte links, Logo rechts -->
+    <header class="world-top-bar">
+      <div class="lichtpunkte-box">
+        <span class="lichtpunkte-label">Lichtpunkte:</span><br>
+        <span id="lichtpunkte-wert" class="lichtpunkte-value">0</span>
+        <img src="../images/lichtpunkt-icon.png" class="lichtpunkte-icon-img" alt="Lichtpunkt"> -->
+      </div>
+
+      <div class="world-logo-wrapper">
+        <!-- Logo oben rechts – kann z.B. zurück zur Startseite führen -->
+        <a href="../html/start.html" class="world-logo-link">
+          <img src="../images/lichtpunkt-icon.png" alt="Lumina Logo" class="world-logo-image">
+          <span class="world-logo-text">LUMINA</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Titel -->
+    <h1 class="world-title">Wähle deine Insel</h1>
+
+    <!-- INSELN – alle als klickbare Links -->
+    <section class="island-grid">
+
+      <a href="../html/insel-selbstliebe.html" class="island">
+        <img src="../images/insel-selbstliebe.png" alt="Insel der Selbstliebe" class="island-image">
+      </a>
+
+      <a href="../html/insel-vertrauen.html" class="island">
+        <img src="../images/insel-vertrauen.png" alt="Insel des Vertrauens" class="island-image">
+      </a>
+
+      <a href="../html/insel-selbstakzeptanz.html" class="island">
+        <img src="../images/insel-selbstakzeptanz.png" alt="Insel der Selbstakzeptanz" class="island-image">
+        <span class="island-name">
+          Insel der<br>Selbstakzeptanz
+        </span>
+      </a>
+
+      <a href="../html/insel-ruhe.html" class="island">
+        <img src="../images/insel-ruhe.png" alt="Insel der Ruhe" class="island-image">
+        <span class="island-name">
+          Insel der<br>Ruhe
+        </span>
+      </a>
+
+      <a href="../html/insel-heilung.html" class="island">
+        <img src="../images/insel-heilung.png" alt="Insel der Heilung" class="island-image">
+        <span class="island-name">
+          Insel der<br>Heilung
+        </span>
+      </a>
+
+    </section>
+
+    <!-- LICHTGEIST / HILFE unten rechts -->
+    <a href="hilfe.html" class="help-button">
+      <img src="images/lichtgeist.png" alt="Lichtgeist" class="help-icon">
+      <span class="help-text">Brauchen Sie Hilfe?</span>
+    </a>
+  </main>
+
+  <!-- einfache JS-Variable für Lichtpunkte (später vom Backend überschreibbar) -->
+  <script>
+    // Hier kannst du später dynamisch den Wert setzen
+    const lichtpunkte = 3; // Beispielwert
+    document.getElementById('lichtpunkte-wert').textContent = lichtpunkte;
+  </script>
+</body>
+</html>
