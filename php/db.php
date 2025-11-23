@@ -2,9 +2,10 @@
 $host = '127.0.0.1';
 $db   = 'Lumora';      
 $user = 'root';        
-$pass = '';            
+$password = '';            
 $charset = 'utf8mb4';
 
+//Verbindung herstellen (dsn=data source name)
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
 //PDO PHP Data Objects - Schnittstelle für DB (SQL-injection-Schutz)
@@ -14,7 +15,7 @@ $options = [
 ];
 
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo = new PDO($dsn, $user, $password, $options);
 } catch (PDOException $e) {
     die('DB connection failed: ' . $e->getMessage());
 }
