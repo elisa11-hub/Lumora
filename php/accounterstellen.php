@@ -31,8 +31,8 @@ $hash = password_hash($password, PASSWORD_DEFAULT);
 try {
     //neuen Benutzer speichern
     $stmt = $pdo->prepare("
-        INSERT INTO user (name_user, passwort_user)
-        VALUES (:name, :passwort)
+        INSERT INTO user (name_user, passwort_user. last_login)
+        VALUES (:name, :passwort, NOW())
     ");
 
     $stmt->execute([
