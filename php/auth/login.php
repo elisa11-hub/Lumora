@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/db.php';   // DB verbinden
+require_once __DIR__ . '/../db.php';   // DB verbinden
 
 //POST-Daten einsammeln
 $username = trim($_POST['username'] ?? '');
@@ -34,7 +34,7 @@ try {
     $_SESSION['user_id'] = $user['id_user'];
 
     //Weiterleiten
-    header('Location: ../html/startseite.html');
+    header('Location: ../../html/startpage.html');
     exit;
 
 } catch (PDOException $e) {

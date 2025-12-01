@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Lumora – Login</title>
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../../css/styles.css">
 </head>
 <body>
   <div class="overlay"></div>
@@ -11,14 +11,14 @@
   <main class="login-screen">
     <!-- Logo oben -->
     <header class="logo-wrapper">
-      <img src="../images/lumora-logo.png" alt="Lumora Logo" class="logo-image">
+      <img src="../../images/lumora-logo.png" alt="Lumora Logo" class="logo-image">
     </header>
 
     <!-- Login-Panel -->
     <section class="login-panel">
       <h2 class="login-title">LogIn</h2>
 
-      <form class="login-form" action="../html/login.html" method="post">
+      <form class="login-form" action="../../php/auth/login.php" method="post">
         <div class="form-row">
           <label for="username">Username:</label>
           <input type="text" id="username" name="username" required>
@@ -31,9 +31,9 @@
 
         <div class="login-actions">
           <!-- Zur Startseite zurück -->
-          <a href="../html/start.html" class="btn btn-secondary btn-wide">Cancel</a>
+          <a href="../start.html" class="btn btn-secondary btn-wide">Cancel</a>
           
-          <a href="../html/startpage.html" class="btn btn-secondary btn-wide">Login</a>
+          <button type="submit" class="btn btn-primary btn-wide">Login</button>
         </div>
       </form>
     </section>
