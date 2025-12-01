@@ -2,8 +2,8 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Lumora – Account erstellen</title>
-  <link rel="stylesheet" href="../css/styles.css">
+  <title>Lumora – Create an account</title>
+  <link rel="stylesheet" href="../../css/styles.css">
 </head>
 <body>
   <div class="overlay"></div>
@@ -11,14 +11,14 @@
   <main class="register-screen">
     <!-- Logo -->
     <header class="logo-wrapper">
-      <img src="../images/lumora-logo.png" alt="Lumora Logo" class="logo-image small-logo">
+      <img src="../../images/lumora-logo.png" alt="Lumora Logo" class="logo-image small-logo">
     </header>
 
     <!-- Panel -->
     <section class="register-panel">
-      <h2 class="register-title">Account erstellen</h2>
+      <h2 class="register-title">Create an account</h2>
 
-      <form class="register-form" action="../html/createaccount.html" method="post">
+      <form class="register-form" action="../../php/auth/createaccount.php" method="post">
 
         <div class="form-row">
           <label for="username">Username:</label>
@@ -38,9 +38,9 @@
         </div>
 
         <div class="register-actions">
-          <a href="../html/start.html" class="btn btn-secondary btn-wide">Cancel</a>
+          <a href="../start.html" class="btn btn-secondary btn-wide">Cancel</a>
 
-          <a href="../html/login.html" class="btn btn-secondary btn-wide">Create Account</a>
+          <button type="submit" class="btn btn-primary btn-wide">Create Account</button>
         </div>
       </form>
     </section>

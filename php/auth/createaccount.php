@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/db.php';   //DB-Verbindung
+require_once __DIR__ . '/../db.php';   //DB-Verbindung
 
 // Hilfsfunktion zur Passwortstärke
 function is_strong_password($password) {
@@ -31,7 +31,7 @@ $hash = password_hash($password, PASSWORD_DEFAULT);
 try {
     //neuen Benutzer speichern
     $stmt = $pdo->prepare("
-        INSERT INTO user (name_user, passwort_user. last_login)
+        INSERT INTO user (name_user, passwort_user, last_login)
         VALUES (:name, :passwort, NOW())
     ");
 
@@ -41,7 +41,7 @@ try {
     ]);
 
     //Weiterleiten zum Login
-    header("Location: ../html/login.html");
+    header("Location: ../../html/aut/login.html");
     exit;
 
 } catch (PDOException $e) {
