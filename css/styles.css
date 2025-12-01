@@ -499,7 +499,7 @@ body {
 
 /* weniger Abstand oben – hier kommt später die Top-Bar hin */
 .emergency-screen {
-  padding-top: 2rem;   /* statt 3rem */
+  padding-top: 1rem;   /* statt 3rem */
 }
 
 /* Panel etwas breiter und optisch mittig */
@@ -561,6 +561,26 @@ body {
   .emergency-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Sanfte Hervorhebung für Punkt 4 */
+.emergency-highlight-soft {
+  background: rgba(255, 222, 130, 0.12); /* sehr softes Gelb */
+  border-left: 4px solid #ffd66b;
+  padding: 1rem 1.2rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.emergency-quote {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;                /* größer */
+  font-weight: 600;                  /* betont, aber nicht fett */
+  color: #ffe9a8;                    /* warmes Lumora-Gelb */
+  text-align: center;                /* zentriert wirkt emotionaler */
+  line-height: 1.5;                  /* ruhiger Abstand */
+  text-shadow: 0 0 10px rgba(255, 220, 130, 0.35); /* sanftes Glow */
 }
 
 
