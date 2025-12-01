@@ -495,5 +495,73 @@ body {
   }
 }
 
+/* ===== EMERGENCY PAGE SPEZIFISCH ===== */
+
+/* weniger Abstand oben – hier kommt später die Top-Bar hin */
+.emergency-screen {
+  padding-top: 2rem;   /* statt 3rem */
+}
+
+/* Panel etwas breiter und optisch mittig */
+.emergency-panel {
+  max-width: 1100px;
+  width: 90%;
+}
+
+/* zwei Spalten nebeneinander */
+.emergency-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.emergency-column {
+  min-width: 0;
+}
+
+/* farbige Hervorhebung für wichtige Hinweise */
+.emergency-highlight-warning {
+  background: rgba(255, 222, 130, 0.16); /* warmes Lumora-Gelb, sehr soft */
+  border-left: 4px solid #ffd66b;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.8rem;
+  font-size: 0.98rem;
+}
+
+.emergency-highlight-warning strong {
+  color: #ffe18e;
+}
+
+/* kleinere Info-Notizen */
+.emergency-note {
+  margin-top: 0.7rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Links im Emergency-Text leicht hervorheben */
+.emergency-panel a {
+  color: #9ef5ff;
+  text-decoration: underline;
+}
+
+.emergency-panel a:hover {
+  text-decoration: none;
+}
+
+/* Hintergrundfarbe unterhalb des Bildes angleichen,
+   damit beim Scrollen kein "abgehackter" Rand entsteht */
+body {
+  background-color: #020b16; /* dunkles Blau, nah an deinem Hintergrundbild */
+}
+
+/* responsive: unter ~900px Spalten untereinander */
+@media (max-width: 900px) {
+  .emergency-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 
