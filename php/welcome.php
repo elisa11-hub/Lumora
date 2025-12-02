@@ -72,7 +72,7 @@ $lastLogin   = $user['last_login'] ?? null;
       <span class="topbar-username">
         Hi,&nbsp;<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>
       </span>
-      <a href="auth/logout.php" class="btn topbar-button">Logout</a>
+      <a href="../php/auth/logout.php" class="btn topbar-button">Logout</a>
     </div>
   </header>
 
