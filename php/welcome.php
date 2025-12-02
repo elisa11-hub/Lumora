@@ -1,22 +1,20 @@
 <?php
 session_start();
 
-// Wenn kein User eingeloggt ist → zurück zum Login
+// Wenn kein User eingeloggt ist → zurück zum Login (HTML liegt im html/auth/)
 if (!isset($_SESSION['user_id'])) {
-    header('Location: auth/login.html');
+    header('Location: ../html/auth/login.html');
     exit;
 }
 
-// DB-Verbindung holen
-require_once __DIR__ . '/../php/db.php';
+require_once __DIR__ . '/db.php';
 
-$userId = (int) $_SESSION['user_id'];
-$username = 'Traveler';
+$userId     = (int) $_SESSION['user_id'];
+$username   = 'Traveler';
 $lightpoints = null;
-$lastLogin = null;
+$lastLogin   = null;
 
 try {
-    // Erst versuchen wir, auch lichtpunkte zu laden
     $stmt = $pdo->prepare('
         SELECT name_user, lightpoints, last_login
         FROM user
@@ -25,7 +23,7 @@ try {
     $stmt->execute([':id' => $userId]);
     $user = $stmt->fetch();
 } catch (PDOException $e) {
-    // Falls die Spalte "lichtpunkte" (noch) nicht existiert, fallback:
+    // Falls Spalte lightpoints noch nicht existiert
     if (strpos($e->getMessage(), 'lightpoints') !== false) {
         $stmt = $pdo->prepare('
             SELECT name_user, last_login
@@ -35,25 +33,23 @@ try {
         $stmt->execute([':id' => $userId]);
         $user = $stmt->fetch();
     } else {
-        // anderer DB-Fehler → hart abbrechen
         die('Database error: ' . htmlspecialchars($e->getMessage()));
     }
 }
 
 if (!$user) {
-    // User nicht gefunden → Session aufräumen und zurück zum Login
     session_unset();
     session_destroy();
-    header('Location: auth/login.html');
+    header('Location: ../html/auth/login.html');
     exit;
 }
 
-$username   = $user['name_user'] ?? 'Traveler';
+$username    = $user['name_user'] ?? 'Traveler';
 $lightpoints = isset($user['lightpoints']) ? (int)$user['lightpoints'] : null;
 $lastLogin   = $user['last_login'] ?? null;
 ?>
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Welcome to Lumora</title>
@@ -65,7 +61,7 @@ $lastLogin   = $user['last_login'] ?? null;
   <!-- TOPBAR -->
   <header class="topbar">
     <div class="topbar-left">
-      <a href="emergency.html" class="btn topbar-emergency">Emergency</a>
+      <a href="../html/emergency.html" class="btn topbar-emergency">Emergency</a>
     </div>
 
     <div class="topbar-center">
@@ -74,56 +70,71 @@ $lastLogin   = $user['last_login'] ?? null;
 
     <div class="topbar-right">
       <span class="topbar-username">
-        Hi, <?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>
+        Hi,&nbsp;<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>
       </span>
-      <a href="../php/auth/logout.php" class="btn topbar-button">Logout</a>
+      <a href="auth/logout.php" class="btn topbar-button">Logout</a>
     </div>
   </header>
 
   <!-- HAUPT-INHALT -->
-  <main class="welcome-layout">
+  <main class="welcome-screen">
     <section class="welcome-card">
-      <h1 class="welcome-title">
-        Welcome back, <?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>.
-      </h1>
+      <!-- linke Seite: Text / Greeting -->
+      <div class="welcome-main">
+        <p class="welcome-tagline">Welcome back to Lumora</p>
+        <h1 class="welcome-title">
+          Good to see you, <?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>.
+        </h1>
 
-      <p class="welcome-subtitle">
-        Your journey through the islands continues. Take a moment to arrive, then follow your inner light.
-      </p>
+        <p class="welcome-subtitle">
+          Your journey through the islands continues. Take a breath, arrive here for a moment,
+          and then follow your inner light at your own pace.
+        </p>
 
-      <div class="welcome-stats">
-        <?php if ($lightpoints !== null): ?>
-          <div class="stat-box">
-            <div class="stat-label">Light points</div>
-            <div class="stat-value"><?php echo $lightpoints; ?></div>
-          </div>
-        <?php endif; ?>
-
-        <?php if ($lastLogin !== null): ?>
-          <div class="stat-box">
-            <div class="stat-label">Last login</div>
-            <div class="stat-value stat-value-small">
-              <?php echo htmlspecialchars($lastLogin, ENT_QUOTES, 'UTF-8'); ?>
+        <div class="welcome-meta">
+          <?php if ($lastLogin !== null): ?>
+            <div class="meta-item">
+              <span class="meta-label">Last login</span>
+              <span class="meta-value">
+                <?php echo htmlspecialchars($lastLogin, ENT_QUOTES, 'UTF-8'); ?>
+              </span>
             </div>
-          </div>
-        <?php endif; ?>
+          <?php endif; ?>
 
-        <div class="stat-box">
-          <div class="stat-label">Current world</div>
-          <div class="stat-value stat-value-small">
-            Islands of inner strength
+          <div class="meta-item">
+            <span class="meta-label">Current world</span>
+            <span class="meta-value">Islands of inner strength</span>
           </div>
+        </div>
+
+        <div class="welcome-actions">
+          <a href="../html/startpage.html" class="btn btn-primary welcome-play-btn">
+            Continue your journey
+          </a>
         </div>
       </div>
 
-      <div class="welcome-actions">
-        <a href="startpage.html" class="btn btn-primary welcome-play-btn">
-          Continue your journey
-        </a>
-      </div>
+      <!-- rechte Seite: Stats / Lightpoints -->
+      <aside class="welcome-stats">
+        <?php if ($lightpoints !== null): ?>
+          <div class="stat-box big">
+            <div class="stat-label">Light points</div>
+            <div class="stat-value"><?php echo $lightpoints; ?></div>
+            <p class="stat-hint">
+              Each point is a moment you took for yourself.
+            </p>
+          </div>
+        <?php endif; ?>
+
+        <div class="stat-box soft">
+          <div class="stat-label">Today’s gentle reminder</div>
+          <p class="stat-quote">
+            You don’t have to be perfect to keep going.
+            Showing up is already an act of courage.
+          </p>
+        </div>
+      </aside>
     </section>
   </main>
 </body>
 </html>
-
-
