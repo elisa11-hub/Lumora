@@ -32,9 +32,10 @@ try {
 
     //Session speichern
     $_SESSION['user_id'] = $user['id_user'];
+    $_SESSION['username'] = $user['name_user'];
 
     //Weiterleiten
-    header('Location: ../../html/startpage.html');
+    header('Location: ../welcome.php');
     exit;
 
 } catch (PDOException $e) {
