@@ -496,10 +496,8 @@ body {
 }
 
 /* ===== EMERGENCY PAGE SPEZIFISCH ===== */
-
-/* weniger Abstand oben – hier kommt später die Top-Bar hin */
 .emergency-screen {
-  padding-top: 1rem;   /* statt 3rem */
+  padding-top: 1rem;   
 }
 
 /* Panel etwas breiter und optisch mittig */
