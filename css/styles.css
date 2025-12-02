@@ -8,6 +8,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: #020b16;
   color: #e3f9ff;
 }
 
@@ -548,12 +549,6 @@ body {
   text-decoration: none;
 }
 
-/* Hintergrundfarbe unterhalb des Bildes angleichen,
-   damit beim Scrollen kein "abgehackter" Rand entsteht */
-body {
-  background-color: #020b16; /* dunkles Blau, nah an deinem Hintergrundbild */
-}
-
 /* responsive: unter ~900px Spalten untereinander */
 @media (max-width: 900px) {
   .emergency-grid {
@@ -634,7 +629,7 @@ body {
 }
 
 .topbar-logo {
-  height: 80px;
+  height: 70px;
   width: auto;
 }
 
