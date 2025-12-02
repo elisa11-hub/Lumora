@@ -2,30 +2,58 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Lumina – Start</title>
+  <title>Lumora – Start</title>
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
   <div class="overlay"></div>
 
-  <main class="start-screen">
-    <!-- Logo oben -->
+  <!-- Top-Bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="emergency.html" class="btn topbar-emergency">Emergency</a>
+    </div>
+
+    <div class="topbar-center">
+      <img src="../images/lumora-logo.png" alt="Lumora Logo" class="topbar-logo">
+    </div>
+
+    <div class="topbar-right">
+      <a href="auth/login.html" class="btn topbar-button">Login</a>
+      <a href="auth/createaccount.html" class="btn topbar-button">Create Account</a>
+    </div>
+  </header>
+
+  <!-- Hauptbereich -->
+  <main class="start-screen start-screen-with-topbar">
+    <!-- Großes Logo & Titel -->
     <header class="logo-wrapper">
-      <!-- Logo-Bild -->
-      <img src="../images/lumora-logo.png" alt="Lumora Logo" class="logo-image">
+      <img src="../images/lumora-logo-new.png" alt="Lumora Logo" class="logo-image">
+      <!-- falls du später einen Untertitel willst:
+      <p class="logo-text">ISLANDS OF INNER LIGHT</p>
+      -->
     </header>
+
+    <section class="start-tagline">
+    <p class="start-tagline-main">
+      A gentle game world to strengthen your inner light.
+      </p>
+      <p class="start-tagline-sub">
+      Travel through islands of healing, self-love, self-embrace and trust – at your own pace.
+      </p>
+    </section>
 
     <!-- Play-Button -->
     <section class="button-main">
-      <!-- Hier später im Backend ggf. auf deine Spiel-Route zeigen -->
-      <a href="/play" class="btn btn-primary">PLAY</a>
+      <!-- vorerst: Play führt zum Login; später kannst du hier
+           dynamisch auf Welcome-Page weiterleiten, wenn eingeloggt -->
+      <a href="auth/login.html" class="btn btn-primary">PLAY</a>
     </section>
 
     <!-- Login & Account erstellen -->
     <section class="button-secondary">
-      <!-- Frontend-Links, Backend kann /login und /register verarbeiten -->
-      <a href="../html/login.html" class="btn btn-secondary">Login</a>
-      <a href="../html/createaccount.html" class="btn btn-secondary">Create Account</a>
+      <a href="auth/login.html" class="btn btn-secondary">Login</a>
+      <a href="auth/createaccount.html" class="btn btn-secondary">Create account</a>
     </section>
   </main>
 </body>
