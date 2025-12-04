@@ -895,3 +895,156 @@ body {
   max-width: 820px;
   grid-template-columns: 1fr;
 }
+
+/* ===== FLOATING EMERGENCY BUTTON (ohne Topbar) ===== */
+
+.emergency-floating {
+  position: fixed;
+  top: 1.2rem;
+  left: 1.6rem;
+  z-index: 1000;
+}
+
+/* Emergency-Button etwas edler machen (gilt überall, wo topbar-emergency benutzt wird) */
+.topbar-emergency {
+  padding: 0.65rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.95), rgba(255, 150, 120, 0.9));
+  border-radius: 999px;
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(255, 220, 220, 0.6);
+}
+
+.topbar-emergency:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(255, 100, 100, 1), rgba(255, 180, 140, 0.95));
+}
+
+/* ===== START-HERO FEINSCHLIFF ===== */
+
+.start-logo-hero {
+  margin-bottom: 2rem;
+}
+
+.start-logo-hero .logo-image {
+  max-width: 540px;
+}
+
+/* Tagline hast du schon – hier nur minimal mehr Luft */
+.start-tagline {
+  margin-bottom: 2rem;
+  text-align: center;
+  max-width: 650px;
+  color: #e6f8ff;
+}
+
+/* Kleine „Pills“ unter der Tagline */
+.start-pill-row {
+  margin-bottom: 2.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  max-width: 820px;
+}
+
+.start-pill {
+  background: rgba(5, 15, 30, 0.85);
+  border-radius: 999px;
+  padding: 0.6rem 1.8rem;
+  font-size: 0.95rem;
+  color: #e7f6ff;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(120, 200, 230, 0.4);
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+
+/* Play-Button als Hero-Button leicht „glowen“ lassen */
+.start-play-btn {
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7);
+}
+
+.start-play-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.85);
+}
+
+/* ===== FEATURE-GRID UNTER DEM HERO ===== */
+
+.start-feature-grid {
+  margin-top: 1.5rem;
+  margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.8rem;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.start-feature-card {
+  background: rgba(5, 15, 30, 0.85);
+  border-radius: 18px;
+  padding: 1.6rem 1.5rem 1.8rem;
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(80, 150, 190, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.start-feature-icon {
+  width: 38px;
+  height: auto;
+  margin-bottom: 0.8rem;
+  filter: drop-shadow(0 0 10px rgba(255, 240, 150, 0.6));
+}
+
+.start-feature-icon.dimmed {
+  opacity: 0.7;
+  filter: drop-shadow(0 0 5px rgba(255, 240, 150, 0.35));
+}
+
+.start-feature-title {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f2fbff;
+}
+
+.start-feature-text {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.6;
+  color: #c7ddf0;
+}
+
+/* ===== RESPONSIVE ANPASSUNGEN SPEZIFISCH FÜR DIE STARTSEITE ===== */
+
+@media (max-width: 900px) {
+  .start-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .start-pill-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .start-pill {
+    width: 100%;
+  }
+
+  .start-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emergency-floating {
+    top: 0.8rem;
+    left: 0.9rem;
+  }
+}

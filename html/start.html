@@ -8,52 +8,80 @@
 <body>
   <div class="overlay"></div>
 
-  <!-- Top-Bar -->
-  <header class="topbar">
-    <div class="topbar-left">
-      <a href="emergency.html" class="btn topbar-emergency">Emergency</a>
-    </div>
-
-    <div class="topbar-center">
-      <img src="../images/lumora-logo.png" alt="Lumora Logo" class="topbar-logo">
-    </div>
-
-    <div class="topbar-right">
-      <a href="auth/login.html" class="btn topbar-button">Login</a>
-      <a href="auth/createaccount.html" class="btn topbar-button">Create Account</a>
-    </div>
-  </header>
+  <!-- Emergency: immer sichtbar, dezent oben links -->
+  <a href="emergency.html" class="btn topbar-emergency emergency-floating">
+    Emergency
+  </a>
 
   <!-- Hauptbereich -->
-  <main class="start-screen start-screen-with-topbar">
-    <!-- Großes Logo & Titel -->
-    <header class="logo-wrapper">
-      <img src="../images/lumora-logo-new.png" alt="Lumora Logo" class="logo-image">
-      <!-- falls du später einen Untertitel willst:
-      <p class="logo-text">ISLANDS OF INNER LIGHT</p>
-      -->
-    </header>
+  <main class="start-screen">
+    <!-- Hero-Bereich -->
+    <section class="start-hero">
+      <header class="logo-wrapper start-logo-hero">
+        <img src="../images/lumora-logo-new.png" alt="Lumora Logo" class="logo-image">
+      </header>
 
-    <section class="start-tagline">
-    <p class="start-tagline-main">
-      A gentle game world to strengthen your inner light.
-      </p>
-      <p class="start-tagline-sub">
-      Travel through islands of healing, self-love, self-embrace and trust – at your own pace.
-      </p>
+      <section class="start-tagline">
+        <p class="start-tagline-main">
+          A gentle game world to strengthen your inner light.
+        </p>
+        <p class="start-tagline-sub">
+          Travel through islands of healing, self-love, self-embrace and trust – at your own pace.
+        </p>
+      </section>
+
+      <!-- Kleine „Pills“: was erwartet mich? -->
+      <section class="start-pill-row">
+        <div class="start-pill">
+          ✨ Gentle exercises to build inner strength
+        </div>
+        <div class="start-pill">
+          🌿 Short sessions – no pressure, just small steps
+        </div>
+        <div class="start-pill">
+          🕊️ A calm space that is just for you
+        </div>
+      </section>
+
+      <!-- Play-Button -->
+      <section class="button-main">
+        <a href="auth/login.html" class="btn btn-primary start-play-btn">
+          PLAY
+        </a>
+      </section>
+
+      <!-- Login / Account -->
+      <section class="button-secondary">
+        <a href="auth/login.html" class="btn btn-secondary">Login</a>
+        <a href="auth/createaccount.html" class="btn btn-secondary">Create account</a>
+      </section>
     </section>
 
-    <!-- Play-Button -->
-    <section class="button-main">
-      <!-- vorerst: Play führt zum Login; später kannst du hier
-           dynamisch auf Welcome-Page weiterleiten, wenn eingeloggt -->
-      <a href="auth/login.html" class="btn btn-primary">PLAY</a>
-    </section>
+    <!-- Feature-Grid unten: kleine Karten mit Icon -->
+    <section class="start-feature-grid">
+      <article class="start-feature-card">
+        <img src="../images/lightpoint-icon.png" alt="" class="start-feature-icon">
+        <h3 class="start-feature-title">Light points</h3>
+        <p class="start-feature-text">
+          Collect light points as you practice. They don’t judge you – they simply grow with every step you take.
+        </p>
+      </article>
 
-    <!-- Login & Account erstellen -->
-    <section class="button-secondary">
-      <a href="auth/login.html" class="btn btn-secondary">Login</a>
-      <a href="auth/createaccount.html" class="btn btn-secondary">Create account</a>
+      <article class="start-feature-card">
+        <img src="../images/lightpoint-icon.png" alt="" class="start-feature-icon dimmed">
+        <h3 class="start-feature-title">Your own pace</h3>
+        <p class="start-feature-text">
+          Visit an island for a few minutes or stay longer. Lumora adapts to your energy, not the other way around.
+        </p>
+      </article>
+
+      <article class="start-feature-card">
+        <img src="../images/lightpoint-icon.png" alt="" class="start-feature-icon">
+        <h3 class="start-feature-title">Inner islands</h3>
+        <p class="start-feature-text">
+          Explore islands of healing, self-love, self-embrace and trust – each one a small step towards more clarity.
+        </p>
+      </article>
     </section>
   </main>
 </body>
