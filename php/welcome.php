@@ -126,9 +126,9 @@ $lastLogin   = $user['last_login'] ?? null;
           </div>
         <?php endif; ?>
 
-        <div class="stat-box soft">
+        <div class="stat-box reminder-highlight-soft">
           <div class="stat-label">Today’s gentle reminder</div>
-          <p class="stat-quote">
+          <p class="reminder-quote">
             You don’t have to be perfect to keep going.
             Showing up is already an act of courage.
           </p>

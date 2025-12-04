@@ -560,7 +560,8 @@ body {
 }
 
 /* Sanfte Hervorhebung für Punkt 4 */
-.emergency-highlight-soft {
+.emergency-highlight-soft,
+.reminder-highlight-soft {
   background: rgba(255, 222, 130, 0.12); /* sehr softes Gelb */
   border-left: 4px solid #ffd66b;
   padding: 1rem 1.2rem;
@@ -569,7 +570,8 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.emergency-quote {
+.emergency-quote,
+.reminder-quote {
   margin-top: 1.5rem;
   font-size: 1.25rem;                /* größer */
   font-weight: 600;                  /* betont, aber nicht fett */
