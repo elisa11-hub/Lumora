@@ -1063,3 +1063,61 @@ body {
     left: 0.9rem;
   }
 }
+
+/* Titelbereich */
+.world-header {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.world-subline {
+  color: #cfe8f5;
+  opacity: 0.9;
+  margin-top: 0.4rem;
+  font-size: 1.1rem;
+}
+
+/* Neue Inselkarten */
+.enhanced-islands {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2.2rem;
+}
+
+.island-card {
+  background: rgba(5, 15, 30, 0.75);
+  border-radius: 18px;
+  padding: 1.5rem 1.2rem;
+  text-align: center;
+  text-decoration: none;
+  color: #e9faff;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.7);
+  border: 1px solid rgba(150, 220, 255, 0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.island-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.85);
+}
+
+.island-card img {
+  width: 180px;
+  height: auto;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 12px rgba(0,0,0,0.8));
+}
+
+.island-card h3 {
+  margin: 0.5rem 0 0.4rem;
+  font-size: 1.3rem;
+  color: #9fe8ff;
+}
+
+.island-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}

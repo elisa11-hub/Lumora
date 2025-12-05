@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lumora – Inner Islands</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <div class="overlay"></div>
+
+  <main class="world-screen">
+
+    <!-- TOP BAR -->
+    <header class="world-top-bar">
+      <div class="lichtpunkte-box">
+        <span class="lichtpunkte-label">Lightpoints:</span><br>
+        <span id="lichtpunkte-wert" class="lichtpunkte-value">0</span>
+        <img src="../images/lightpoint-icon.png" class="lichtpunkte-icon-img" alt="lightpoint">
+      </div>
+
+      <a href="../html/start.html" class="world-logo-link">
+        <img src="../images/lumora-logo-new.png" alt="Lumora Logo" class="world-logo-image">
+      </a>
+    </header>
+
+    <!-- TITLE -->
+    <section class="world-header">
+      <h1 class="world-title">Choose your next island</h1>
+      <p class="world-subline">
+        Every island holds a part of your inner light.
+      </p>
+    </section>
+
+    <!-- ISLAND GRID -->
+    <section class="island-grid enhanced-islands">
+
+      <!-- 1. SELF-LOVE -->
+      <a href="../html/islands/selflove.html" class="island-card">
+        <img src="../images/island-selflove.png" alt="Island of Self-Love">
+        <h3 style="color:#ff9ac0;">Island of Self-Love</h3>
+        <p>A warm, gentle place where you learn to soften your heart toward yourself.</p>
+      </a>
+
+      <!-- 2. TRUST -->
+      <a href="../html/island/trust.html" class="island-card">
+        <img src="../images/island-trust.png" alt="Island of Trust">
+        <h3 style="color:#9ed8ff;">Island of Trust</h3>
+        <p>A quiet island where courage grows naturally, step by step.</p>
+      </a>
+
+      <!-- 3. SELF-EMBRACE -->
+      <a href="../html/islands/selfembrace.html" class="island-card">
+        <img src="../images/island-selfembrace.png" alt="Island of Self-Embrace">
+        <h3 style="color:#78c2ff;">Island of Self-Embrace</h3>
+        <p>A safe place that invites you to hold every part of yourself with kindness.</p>
+      </a>
+
+      <!-- 4. PEACE -->
+      <a href="../html/islands/peace.html" class="island-card">
+        <img src="../images/island-peace.png" alt="Island of Peace">
+        <h3 style="color:#bfa6ff;">Island of Peace</h3>
+        <p>A calm island of stillness, breathing, and gentle grounding.</p>
+      </a>
+
+      <!-- 5. HEALING -->
+      <a href="../html/islands/healing.html" class="island-card">
+        <img src="../images/island-healing.png" alt="Island of Healing">
+        <h3 style="color:#98f0b8;">Island of Healing</h3>
+        <p>A soft green sanctuary where your inner world can recover and renew.</p>
+      </a>
+
+    </section>
+
+  </main>
+
+  <script>
+    const lichtpunkte = 3;
+    document.getElementById('lichtpunkte-wert').textContent = lichtpunkte;
+  </script>
+
+</body>
+</html>
