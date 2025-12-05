@@ -3,20 +3,38 @@ session_start();
 
 // Wenn nicht eingeloggt → zurück zum Login
 if (!isset($_SESSION['user_id'])) {
-    header('Location: auth/login.html');
+    header('Location: ../html/auth/login.html');
     exit;
 }
 
-require_once __DIR__ . '/../php/db.php';
+require_once __DIR__ . '/db.php';
 
-$userId = (int) $_SESSION['user_id'];
+$userId    = (int)$_SESSION['user_id'];
+$username  = 'Traveler';
+$lightpoints = 0;
 
-$stmt = $pdo->prepare("SELECT name_user, lightpoints FROM user WHERE id_user = :id");
-$stmt->execute([":id" => $userId]);
-$user = $stmt->fetch();
+try {
+    // Name und gesamte Lightpoints des Users holen
+    $stmt = $pdo->prepare("
+        SELECT 
+            u.name_user,
+            COALESCE(SUM(lp.lightpoints), 0) AS lightpoints
+        FROM user u
+        LEFT JOIN lightpoints lp
+            ON lp.user_id_user = u.id_user
+        WHERE u.id_user = :id
+    ");
+    $stmt->execute([':id' => $userId]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$username    = $user['name_user']    ?? "Traveler";
-$lightpoints = $user['lightpoints']  ?? 0;
+    if ($row) {
+        $username    = $row['name_user'];
+        $lightpoints = (int)$row['lightpoints'];
+    }
+} catch (PDOException $e) {
+    die('Database error: ' . htmlspecialchars($e->getMessage()));
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +47,7 @@ $lightpoints = $user['lightpoints']  ?? 0;
 
 <div class="overlay"></div>
 
-<!-- TOPBAR (GENAU wie in welcome.php) -->
+<!-- TOPBAR -->
 <header class="topbar">
 
     <!-- Emergency Button -->
