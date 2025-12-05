@@ -108,7 +108,7 @@ $lastLogin   = $user['last_login'] ?? null;
         </div>
 
         <div class="welcome-actions">
-          <a href="../html/world.html" class="btn btn-primary welcome-play-btn">
+          <a href="../world.php" class="btn btn-primary welcome-play-btn">
             Continue your journey
           </a>
         </div>
