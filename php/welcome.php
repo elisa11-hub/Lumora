@@ -9,30 +9,32 @@ if (!isset($_SESSION['user_id'])) {
 
 require_once __DIR__ . '/db.php';
 
-$userId    = (int)$_SESSION['user_id'];
-$username  = 'Traveler';
-$lightpoints = 0;
+$userId     = (int) $_SESSION['user_id'];
+$username   = 'Traveler';
+$lightpoints = null;
+$lastLogin   = null;
 
 try {
-    // Name und gesamte Lightpoints des Users holen
-    $stmt = $pdo->prepare("
-        SELECT 
-            u.name_user,
-            COALESCE(SUM(lp.lightpoints), 0) AS lightpoints
-        FROM user u
-        LEFT JOIN lightpoints lp
-            ON lp.user_id_user = u.id_user
-        WHERE u.id_user = :id
-    ");
+    $stmt = $pdo->prepare('
+        SELECT name_user, lightpoints, last_login
+        FROM user
+        WHERE id_user = :id
+    ');
     $stmt->execute([':id' => $userId]);
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($row) {
-        $username    = $row['name_user'];
-        $lightpoints = (int)$row['lightpoints'];
-    }
+    $user = $stmt->fetch();
 } catch (PDOException $e) {
-    die('Database error: ' . htmlspecialchars($e->getMessage()));
+    // Falls Spalte lightpoints noch nicht existiert
+    if (strpos($e->getMessage(), 'lightpoints') !== false) {
+        $stmt = $pdo->prepare('
+            SELECT name_user, last_login
+            FROM user
+            WHERE id_user = :id
+        ');
+        $stmt->execute([':id' => $userId]);
+        $user = $stmt->fetch();
+    } else {
+        die('Database error: ' . htmlspecialchars($e->getMessage()));
+    }
 }
 
 if (!$user) {
