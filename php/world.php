@@ -14,11 +14,11 @@ $username  = 'Traveler';
 $lightpoints = 0;
 
 try {
-    // Name und gesamte Lightpoints des Users holen
     $stmt = $pdo->prepare("
         SELECT 
             u.name_user,
-            COALESCE(SUM(lp.lightpoints), 0) AS lightpoints
+            u.last_login,
+            COALESCE(SUM(lp.lightpoints), 0) AS total_lightpoints
         FROM user u
         LEFT JOIN lightpoints lp
             ON lp.user_id_user = u.id_user
@@ -29,7 +29,8 @@ try {
 
     if ($row) {
         $username    = $row['name_user'];
-        $lightpoints = (int)$row['lightpoints'];
+        $lastLogin   = $row['last_login'];
+        $lightpoints = (int)$row['total_lightpoints'];
     }
 } catch (PDOException $e) {
     die('Database error: ' . htmlspecialchars($e->getMessage()));
@@ -52,7 +53,7 @@ try {
 
     <!-- Emergency Button -->
     <div class="topbar-left">
-        <a href="emergency.html" class="btn topbar-emergency">Emergency</a>
+       <a href="../html/emergency.html" class="btn topbar-emergency">Emergency</a>
     </div>
 
     <!-- Logo -->
@@ -71,7 +72,7 @@ try {
 
         <span class="topbar-username">Hi, <?php echo htmlspecialchars($username); ?></span>
 
-        <a href="../php/auth/logout.php" class="btn topbar-button">Logout</a>
+        <a href="auth/logout.php" class="btn topbar-button">Logout</a>
     </div>
 </header>
 
