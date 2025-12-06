@@ -1,6 +1,6 @@
 <?php
 $host = '127.0.0.1';
-$db   = 'Lumora';      
+$db   = 'lumora';      
 $user = 'root';        
 $password = '';            
 $charset = 'utf8mb4';
