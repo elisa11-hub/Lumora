@@ -34,7 +34,29 @@ try {
         $lightpoints = (int)$row['total_lightpoints'];
     }
 } catch (PDOException $e) {
-    die('Database error: ' . htmlspecialchars($e->getMessage()));
+
+    // Wenn das Problem *genau* an der Spalte lightpoints liegt → Fallback ohne JOIN
+    if (strpos($e->getMessage(), 'lightpoints') !== false) {
+
+        // Nur name_user + last_login holen, Lightpoints auf 0 setzen
+        $stmt = $pdo->prepare("
+            SELECT name_user, last_login
+            FROM user
+            WHERE id_user = :id
+        ");
+        $stmt->execute([':id' => $userId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $username    = $row['name_user'];
+            $lastLogin   = $row['last_login'];
+            $lightpoints = null;   // oder 0, je nachdem was du anzeigen willst
+        }
+
+    } else {
+        // anderer DB-Fehler → ausgeben
+        die('Database error: ' . htmlspecialchars($e->getMessage()));
+    }
 }
 
 ?>
