@@ -15,38 +15,30 @@ $lightpoints = null;
 $lastLogin   = null;
 
 try {
-    $stmt = $pdo->prepare('
-        SELECT name_user, lightpoints, last_login
-        FROM user
-        WHERE id_user = :id
-    ');
+    // User-Daten + Lightpoints über JOIN holen
+    $stmt = $pdo->prepare("
+        SELECT 
+            u.name_user,
+            u.last_login,
+            COALESCE(SUM(lp.lightpoints),0) AS total_lightpoints
+        FROM user u
+        LEFT JOIN lightpoints lp
+            ON lp.user_id_user = u.id_user
+        WHERE u.id_user = :id
+    ");
+
     $stmt->execute([':id' => $userId]);
-    $user = $stmt->fetch();
-} catch (PDOException $e) {
-    // Falls Spalte lightpoints noch nicht existiert
-    if (strpos($e->getMessage(), 'lightpoints') !== false) {
-        $stmt = $pdo->prepare('
-            SELECT name_user, last_login
-            FROM user
-            WHERE id_user = :id
-        ');
-        $stmt->execute([':id' => $userId]);
-        $user = $stmt->fetch();
-    } else {
-        die('Database error: ' . htmlspecialchars($e->getMessage()));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row) {
+        $username    = $row['name_user'];
+        $lastLogin   = $row['last_login'];
+        $lightpoints = (int)$row['total_lightpoints'];
     }
-}
 
-if (!$user) {
-    session_unset();
-    session_destroy();
-    header('Location: ../html/auth/login.html');
-    exit;
+} catch (PDOException $e) {
+    die('Database error: ' . htmlspecialchars($e->getMessage()));
 }
-
-$username    = $user['name_user'] ?? 'Traveler';
-$lightpoints = isset($user['lightpoints']) ? (int)$user['lightpoints'] : null;
-$lastLogin   = $user['last_login'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
