@@ -20,11 +20,12 @@ try {
         SELECT 
             u.name_user,
             u.last_login,
-            COALESCE(SUM(lp.lightpoints),0) AS total_lightpoints
+            COALESCE(SUM(lp.lightpoints), 0) AS total_lightpoints
         FROM user u
         LEFT JOIN lightpoints lp
             ON lp.user_id_user = u.id_user
         WHERE u.id_user = :id
+        GROUP BY u.id_user;
     ");
 
     $stmt->execute([':id' => $userId]);

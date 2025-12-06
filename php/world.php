@@ -23,6 +23,7 @@ try {
         LEFT JOIN lightpoints lp
             ON lp.user_id_user = u.id_user
         WHERE u.id_user = :id
+        GROUP BY u.id_user;
     ");
     $stmt->execute([':id' => $userId]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
