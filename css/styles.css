@@ -98,6 +98,39 @@ body {
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
 }
 
+.btn-cancellogin {
+  background: #585f60;
+  color: #f5feff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+  min-width: 200px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 1.4rem 1.0rem;   
+  font-size: 1.5rem;
+}
+
+.btn-cancellogin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
+}
+
+
+.btn-cancelregister {
+  background: #585f60;
+  color: #f5feff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+  min-width: 200px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 1.4rem 4.5rem;   
+  font-size: 1.5rem;
+}
+
+.btn-cancelregister:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
+}
+
 /* Login / Account-Buttons (grau transparent) */
 .btn-secondary {
   background: rgba(200, 210, 220, 0.35);

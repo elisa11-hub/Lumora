@@ -1,0 +1,200 @@
+/* Grundlayout */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;                 /* NEU */
+  justify-content: center;       /* NEU */
+  align-items: center;           /* NEU */
+
+  font-family: "Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-image: url("../images/lumora-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #020b16;
+  color: #e3f9ff;
+}
+
+
+/* Spielfeld */
+.screen {
+  position: relative;
+  width: 1600px;    /* ungefähr wie dein Screenshot */
+  height: 832px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* Logo oben rechts */
+.logo {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  height: 100px;
+}
+
+/* Lightpoints oben links */
+.lightpoints {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #f5feff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
+.lp-value {
+  font-weight: bold;
+}
+
+.lp-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Insel in der Mitte (falls eigenes Bild) */
+.island {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+}
+
+/* Titelzentrum */
+.title-text {
+  position: fixed;                 /* bleibt am unteren Bildschirm */
+  bottom: 40px;                    /* Abstand nach unten */
+  left: 50%;
+  transform: translateX(-50%);     /* exakt zentriert */
+
+  text-align: center;
+  color: #ffb3c5;
+  text-shadow: 0 3px 5px rgba(0,0,0,0.7);
+
+  pointer-events: none;            /* Klicks gehen durch */
+}
+
+
+.title-small {
+  font-size: 20px;
+  letter-spacing: 0.25em;
+}
+
+.title-big {
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 0.15em;
+}
+
+/* Linke Item-Box */
+.items-panel {
+  position: absolute;
+  left: 20px;
+  bottom: 80px;
+  width: 260px;
+  height: 360px;
+  background: rgba(20, 40, 60, 0.7);
+  border-radius: 4px;
+  padding: 20px;
+  color: #f5feff;
+}
+
+.items-header {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.item-img {
+  height: 90px;
+}
+
+.item-count {
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.item-sun {
+  margin-left: 6px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Back-Button */
+.btn-back {
+  position: absolute;
+  left: 30px;
+  bottom: 25px;
+  padding: 10px 35px;
+  border: none;
+  background: rgba(180, 200, 200, 0.9);
+  font-size: 18px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+.btn-back:hover {
+  transform: translateY(-2px);
+}
+
+/* Rechte Task-Box */
+.tasks-panel {
+  position: absolute;
+  right: 110px;
+  top: 210px;
+  text-align: center;
+  color: #d7f4ff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+
+.tasks-header {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.btn-start {
+  padding: 10px 45px;
+  border: none;
+  background: rgba(123, 198, 223, 0.9);
+  color: #f5feff;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 7px 14px rgba(0,0,0,0.5);
+}
+
+.btn-start:hover {
+  transform: translateY(-2px);
+}
+
+/* Help unten rechts */
+.help-area {
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+  text-align: center;
+  color: #f5feff;
+}
+
+.help-icon {
+  width: 60px;
+  display: block;
+  margin: 0 auto 5px;
+}
+
+.help-text {
+  font-size: 14px;
+}
