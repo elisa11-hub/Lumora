@@ -18,6 +18,7 @@
     <section class="register-panel">
       <h2 class="register-title">Create an account</h2>
 
+
       <form class="register-form" action="../../php/auth/createaccount.php" method="post">
 
         <div class="form-row">
@@ -37,13 +38,46 @@
           </div>
         </div>
 
+        <div id="errorBox" class="error-box" style="display: none;"></div>
+
         <div class="register-actions">
-          <a href="../start.html" class="btn btn-secondary btn-wide">Cancel</a>
+          <a href="../start.html" class="btn btn-cancelregister btn-wide">Cancel</a>
 
           <button type="submit" class="btn btn-primary btn-wide">Create Account</button>
         </div>
       </form>
     </section>
   </main>
+  
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const params   = new URLSearchParams(window.location.search);
+  const error    = params.get('error');
+  const username = params.get('username');
+
+  // Fehlermeldung anzeigen
+  if (error) {
+    const box = document.getElementById('errorBox');
+    if (box) {
+      box.textContent = error;
+      box.style.display = 'block';
+    }
+  }
+
+  // Username wieder einsetzen
+  if (username) {
+    const userInput = document.getElementById('username');
+    if (userInput) {
+      userInput.value = username;
+    }
+  }
+
+  // Optional: Query-Parameter aus der URL entfernen, nachdem sie verarbeitet wurden
+  if (error || username) {
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+});
+</script>
+
 </body>
 </html>

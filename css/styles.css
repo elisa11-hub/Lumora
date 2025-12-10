@@ -33,6 +33,16 @@ body {
   padding-bottom: 3.5rem;       
   box-sizing: border-box;
 }
+.error-box {
+  background: rgba(255, 50, 50, 0.12);
+  border: 1px solid #ff3b3b;
+  padding: 10px 16px;
+  margin: 10px 0 20px 0;
+  border-radius: 6px;
+  color: #ff9b9b;
+  font-size: 0.9rem;
+  text-align: center;
+}
 
 /* Logo-Bereich */
 .logo-wrapper {
@@ -94,6 +104,39 @@ body {
 }
 
 .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
+}
+
+.btn-cancellogin {
+  background: #585f60;
+  color: #f5feff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+  min-width: 200px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 1.4rem 1.0rem;   
+  font-size: 1.5rem;
+}
+
+.btn-cancellogin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
+}
+
+
+.btn-cancelregister {
+  background: #585f60;
+  color: #f5feff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+  min-width: 200px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 1.4rem 4.5rem;   
+  font-size: 1.5rem;
+}
+
+.btn-cancelregister:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
 }
