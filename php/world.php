@@ -87,14 +87,14 @@ try {
     <!-- Username, Lightpoints, Logout -->
     <div class="topbar-right">
 
+        <span class="topbar-username">Hi, <?php echo htmlspecialchars($username); ?></span>
+
         <div class="topbar-lightpoints">
-            <img src="../images/lightpoint-icon.png" alt="" class="topbar-lightpoints-icon">
             <span class="topbar-lightpoints-label">Lightpoints</span>
             <span class="topbar-lightpoints-value"><?php echo $lightpoints; ?></span>
         </div>
 
-        <span class="topbar-username">Hi, <?php echo htmlspecialchars($username); ?></span>
-
+        
         <a href="auth/logout.php" class="btn topbar-button">Logout</a>
     </div>
 </header>
