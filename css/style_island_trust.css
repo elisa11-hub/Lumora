@@ -1,0 +1,189 @@
+/* =================
+   Grundlayout
+================== */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  background-image: url("../images/trust.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #020b16;
+
+  color: #e3f9ff;
+}
+
+/* Spielfeld */
+.screen {
+  position: relative;
+  width: 1600px;
+  height: 832px;
+  overflow: hidden;
+}
+
+/* Logo */
+.logo {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  height: 100px;
+}
+
+/* Insel */
+.island {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+}
+
+/* Titel */
+.title-text {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* ===============================
+   Items – links
+================================ */
+.items-panel {
+  position: fixed;
+  left: 20px;
+  bottom: 80px;
+
+  width: 260px;
+  height: 360px;
+
+  background: rgba(15, 35, 60, 0.75); /* kühler für Trust */
+  border-radius: 4px;
+  padding: 20px;
+
+  color: #f5feff;
+}
+
+.items-header {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.item-img {
+  height: 90px;
+}
+
+.item-count {
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.item-sun {
+  margin-left: 6px;
+  width: 18px;
+}
+
+/* ===============================
+   Back-Button
+================================ */
+.btn-back {
+  position: fixed;
+  left: 20px;
+  bottom: 25px;
+
+  width: 260px;
+  padding: 12px 0;
+
+  border: none;
+  border-radius: 4px;
+
+  background: rgba(120, 160, 190, 0.85);
+  color: #012028;
+
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+  transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+  transform: translateY(-2px);
+}
+
+/* ===============================
+   Tasks – rechts
+================================ */
+.tasks-panel {
+  position: absolute;
+  right: 110px;
+  top: 210px;
+
+  text-align: center;
+  color: #d7f4ff;
+
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+
+.tasks-header {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+/* Start Task – Trust-Farbe */
+.btn-start {
+  padding: 10px 45px;
+  border: none;
+
+  background: rgba(120, 190, 220, 0.95);
+  color: #012028;
+
+  font-size: 18px;
+  cursor: pointer;
+
+  box-shadow: 0 7px 14px rgba(0,0,0,0.5);
+}
+
+.btn-start:hover {
+  transform: translateY(-2px);
+}
+
+/* ===============================
+   Help
+================================ */
+.help-area {
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+  text-align: center;
+}
+
+.help-icon {
+  width: 60px;
+  display: block;
+  margin: 0 auto 5px;
+}
+
+.help-text {
+  font-size: 14px;
+}
