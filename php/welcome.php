@@ -80,7 +80,7 @@ try {
     </div>
 
     <div class="topbar-center">
-      <img src="../images/lumora-logo-new.png" alt="Lumora Logo" class="topbar-logo">
+      <img src="../images/lumora-logo.png" alt="Lumora Logo" class="topbar-logo">
     </div>
 
     <div class="topbar-right">

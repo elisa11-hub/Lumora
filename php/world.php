@@ -81,7 +81,7 @@ try {
 
     <!-- Logo -->
     <div class="topbar-center">
-        <img src="../images/lumora-logo-new.png" alt="Lumora Logo" class="topbar-logo">
+        <img src="../images/lumora-logo.png" alt="Lumora Logo" class="topbar-logo">
     </div>
 
     <!-- Username, Lightpoints, Logout -->
@@ -111,44 +111,30 @@ try {
     </section>
 
     <!-- Island Grid -->
-    <section class="island-grid enhanced-islands">
+    <section class="island-grid">
 
-      <!-- 1. SELF-LOVE -->
-      <a href="../html/islands/selflove.html" class="island-card">
-        <img src="../images/island-selflove.png" alt="Island of Self-Love">
-        <h3 style="color:#ff9ac0;">Island of Self-Love</h3>
-        <p>A warm, gentle place where you learn to soften your heart toward yourself.</p>
-      </a>
+  <a href="../html/islands/selflove.html" class="island">
+    <img src="../images/island-selflove.png" alt="Island of Self-Love" class="island-image">
+  </a>
 
-      <!-- 2. TRUST -->
-      <a href="../html/islands/trust.html" class="island-card">
-        <img src="../images/island-trust.png" alt="Island of Trust">
-        <h3 style="color:#9ed8ff;">Island of Trust</h3>
-        <p>A quiet island where courage grows naturally, step by step.</p>
-      </a>
+  <a href="../html/islands/trust.html" class="island">
+    <img src="../images/island-trust.png" alt="Island of Trust" class="island-image">
+  </a>
 
-      <!-- 3. SELF-EMBRACE -->
-      <a href="../html/islands/selfembrace.html" class="island-card">
-        <img src="../images/island-selfembrace.png" alt="Island of Self-Embrace">
-        <h3 style="color:#78c2ff;">Island of Self-Embrace</h3>
-        <p>A safe place inviting you to hold all parts of yourself with compassion.</p>
-      </a>
+  <a href="../html/islands/selfembrace.html" class="island">
+    <img src="../images/island-selfembrace.png" alt="Island of Self-Embrace" class="island-image">
+  </a>
 
-      <!-- 4. PEACE -->
-      <a href="../html/islands/peace.html" class="island-card">
-        <img src="../images/island-peace.png" alt="Island of Peace">
-        <h3 style="color:#bfa6ff;">Island of Peace</h3>
-        <p>A quiet sanctuary of stillness, breathing, grounding and gentle presence.</p>
-      </a>
+  <a href="../html/islands/peace.html" class="island">
+    <img src="../images/island-peace.png" alt="Island of Peace" class="island-image">
+  </a>
 
-      <!-- 5. HEALING -->
-      <a href="../html/islands/healing.html" class="island-card">
-        <img src="../images/island-healing.png" alt="Island of Healing">
-        <h3 style="color:#98f0b8;">Island of Healing</h3>
-        <p>A green place where wounds soften and renewal begins step by step.</p>
-      </a>
+  <a href="../html/islands/healing.html" class="island">
+    <img src="../images/island-healing.png" alt="Island of Healing" class="island-image">
+  </a>
 
-    </section>
+</section>
+
 
 </main>
 
