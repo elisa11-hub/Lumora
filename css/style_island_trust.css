@@ -59,17 +59,16 @@ body {
    Items – links
 ================================ */
 .items-panel {
-  position: fixed;
+   position: fixed;
   left: 20px;
-  bottom: 80px;
+  top: 50%;
+  transform: translateY(-50%);
 
-  width: 260px;
-  height: 360px;
-
-  background: rgba(15, 35, 60, 0.75); /* kühler für Trust */
-  border-radius: 4px;
+  width: 200px;
   padding: 20px;
 
+  background: rgba(15, 35, 60, 0.75);
+  border-radius: 4px;
   color: #f5feff;
 }
 
@@ -136,7 +135,7 @@ body {
 ================================ */
 .tasks-panel {
   position: absolute;
-  right: 110px;
+  right: 10px;
   top: 210px;
 
   text-align: center;
