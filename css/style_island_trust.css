@@ -49,10 +49,12 @@ body {
 /* Titel */
 .title-text {
   position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 35px;
+  left: 280px;
+
+  height: 120px;      /* oder width, je nach Bild */
   pointer-events: none;
+  z-index: 1000;
 }
 
 /* ===============================
