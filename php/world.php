@@ -59,6 +59,34 @@ try {
     }
 }
 
+// 1) alle Inseln laden
+$islands = [];
+$stmt = $pdo->query("
+    SELECT id_islands, name_islands, description, order_index, theme_color, theme_sound, unlock_cost
+    FROM islands
+    ORDER BY order_index ASC
+");
+$islands = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// 2) bereits freigeschaltete Inseln des Users laden
+$unlockedIds = [];
+$stmt = $pdo->prepare("
+    SELECT islands_id_islands
+    FROM user_has_islands
+    WHERE user_id_user = :uwid
+");
+$stmt->execute(['uid' => $userId]);
+$unlockedIds = array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN));
+
+// 3) Optional: automatisch neue Inseln persistieren, sobald Schwelle erreicht ist
+// (INSERT IGNORE klappt gut, wenn (user_id_user, islands_id_islands) UNIQUE/PK ist)
+$insStmt = $pdo->prepare("
+    INSERT IGNORE INTO user_has_islands (user_id_user, islands_id_islands, unlocked_at)
+    VALUES (:uid, :iid, NOW())
+");
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,28 +140,61 @@ try {
 
     <!-- Island Grid -->
     <section class="island-grid">
+<?php
+// Helper: slug für Dateinamen (selflove, trust, ...)
+function slugify($text) {
+    $text = strtolower(trim($text));
+    $text = preg_replace('/[^a-z0-9]+/', '', $text);
+    return $text;
+}
 
-  <a href="../html/islands/selflove.html" class="island">
-    <img src="../images/island-selflove.png" alt="Island of Self-Love" class="island-image">
+foreach ($islands as $island) {
+    $id   = (int)$island['id_islands'];
+    $name = $island['name_islands'];
+    $cost = (int)$island['unlock_cost'];
+
+    // Freigeschaltet wenn:
+    // - in user_has_islands ODER
+    // - lightpoints >= unlock_cost (Schwellenlogik)
+    $isUnlocked = in_array($id, $unlockedIds, true) || ($lightpoints >= $cost);
+
+    // Persistieren, wenn gerade (durch Punkte) freigeschaltet
+    if ($isUnlocked && !in_array($id, $unlockedIds, true)) {
+        $insStmt->execute([':uid' => $userId, ':iid' => $id]);
+        $unlockedIds[] = $id;
+    }
+
+    // Dateinamen/Assets: passe das an deine echten Dateien an
+    // Beispiel: ../html/islands/trust.html und ../images/island-trust.png
+    $slug = slugify($name); // wenn name z.B. "Self-Love" -> "selflove"
+    $href = "../html/islands/{$slug}.html";
+    $img  = "../images/island-{$slug}.png";
+
+    $classes = "island" . ($isUnlocked ? " unlocked" : " locked");
+    $ariaDisabled = $isUnlocked ? "false" : "true";
+    $tabIndex = $isUnlocked ? "0" : "-1";
+
+    // Wenn locked: href auf #, damit man nicht navigiert (zusätzlich CSS pointer-events)
+    $finalHref = $isUnlocked ? $href : "#";
+?>
+  <a
+    href="<?= htmlspecialchars($finalHref) ?>"
+    class="<?= htmlspecialchars($classes) ?>"
+    aria-disabled="<?= $ariaDisabled ?>"
+    tabindex="<?= $tabIndex ?>"
+    data-unlock-cost="<?= (int)$cost ?>"
+  >
+    <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($name) ?>" class="island-image">
+
+    <?php if (!$isUnlocked): ?>
+      <div class="island-lock-overlay">
+        <div class="island-lock-badge">🔒 <?= (int)$cost ?> LP</div>
+      </div>
+    <?php endif; ?>
   </a>
-
-  <a href="../html/islands/trust.html" class="island">
-    <img src="../images/island-trust.png" alt="Island of Trust" class="island-image">
-  </a>
-
-  <a href="../html/islands/selfembrace.html" class="island">
-    <img src="../images/island-selfembrace.png" alt="Island of Self-Embrace" class="island-image">
-  </a>
-
-  <a href="../html/islands/peace.html" class="island">
-    <img src="../images/island-peace.png" alt="Island of Peace" class="island-image">
-  </a>
-
-  <a href="../html/islands/healing.html" class="island">
-    <img src="../images/island-healing.png" alt="Island of Healing" class="island-image">
-  </a>
-
+<?php } ?>
 </section>
+
 
 
 </main>

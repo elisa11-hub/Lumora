@@ -1216,3 +1216,35 @@ body {
   line-height: 1.5;
   opacity: 0.9;
 }
+
+.island.locked {
+  opacity: 0.35;
+  filter: grayscale(90%);
+  pointer-events: none;
+  position: relative;
+}
+
+.island.unlocked {
+  opacity: 1;
+  filter: none;
+  pointer-events: auto;
+  position: relative;
+}
+
+.island-lock-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 10px;
+}
+
+.island-lock-badge {
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
