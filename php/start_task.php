@@ -12,6 +12,23 @@ require_once __DIR__ . '/db.php';
 
 $userId = (int)$_SESSION['user_id'];
 
+// Tageslimit prüfen (max 3 pro Tag)
+$limitStmt = $pdo->prepare("
+  SELECT COALESCE(SUM(lightpoints),0) AS today_points
+  FROM lightpoints
+  WHERE user_id_user = :uid
+    AND DATE(created_at) = CURDATE()
+");
+$limitStmt->execute(['uid' => $userId]);
+$todayPoints = (int)$limitStmt->fetchColumn();
+
+if ($todayPoints >= 3) {
+  http_response_code(429);
+  echo json_encode(['error' => 'limit_reached', 'remaining_today' => 0]);
+  exit;
+}
+
+
 // Optional: Kategorie vom Frontend schicken (movement / mindfulness / journaling)
 // oder leer lassen => komplett random
 $category = isset($_GET['category']) ? trim($_GET['category']) : '';
@@ -46,14 +63,15 @@ try {
 
   // Quest-ID in Session merken, damit man nicht irgendeine ID “faken” kann
   $_SESSION['active_quest_id'] = (int)$quest['id_quests'];
+$remaining = 3 - $todayPoints;
+echo json_encode([
+  'id' => (int)$quest['id_quests'],
+  'title' => $quest['titel'],
+  'description' => $quest['description'],
+  'category' => $quest['category'],
+  'remaining_today' => $remaining
+]);
 
-  echo json_encode([
-    'id' => (int)$quest['id_quests'],
-    'islands_id_islands' => (int)$quest['islands_id_islands'],
-    'title' => $quest['titel'],
-    'description' => $quest['description'],
-    'category' => $quest['category']
-  ]);
 } catch (Throwable $e) {
   http_response_code(500);
   echo json_encode(['error' => 'server_error']);

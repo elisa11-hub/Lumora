@@ -47,6 +47,23 @@ try {
 
   $islandId = (int)$q['islands_id_islands'];
 
+
+  $limitStmt = $pdo->prepare("
+  SELECT COALESCE(SUM(lightpoints),0) AS today_points
+  FROM lightpoints
+  WHERE user_id_user = :uid
+    AND DATE(created_at) = CURDATE()
+");
+$limitStmt->execute(['uid' => $userId]);
+$todayPoints = (int)$limitStmt->fetchColumn();
+
+if ($todayPoints >= 3) {
+  http_response_code(429);
+  echo json_encode(['error' => 'limit_reached']);
+  exit;
+}
+
+
   // 1 Lightpoint eintragen
   $ins = $pdo->prepare("
     INSERT INTO lightpoints (user_id_user, islands_id_islands, quests_id_quests, lightpoints, created_at)

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Task</title>
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background:#0b2b33; color:#fff; display:flex; align-items:center; justify-content:center; height:100vh;}
+    .card { width: 720px; max-width: 90vw; background: rgba(0,0,0,0.35); padding: 24px; border-radius: 16px; text-align:center; }
+    h1 { margin: 0 0 10px; }
+    p { opacity: 0.9; }
+    .btns { display:flex; gap:12px; justify-content:center; margin-top:18px; }
+    button { padding: 10px 18px; border:0; border-radius: 10px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1 id="title">Task</h1>
+    <p id="desc"></p>
+    <div class="btns">
+      <button onclick="cancelTask()">Cancel</button>
+      <button onclick="doneTask()">Done</button>
+    </div>
+    <p id="info" style="margin-top:14px; opacity:.8;"></p>
+  </div>
+
+<script>
+const task = JSON.parse(localStorage.getItem("lumora_active_task") || "null");
+
+if (!task) {
+  document.getElementById("title").textContent = "Kein Task gefunden";
+  document.getElementById("desc").textContent = "Bitte starte den Task erneut.";
+} else {
+  document.getElementById("title").textContent = task.title || "Task";
+  document.getElementById("desc").textContent = task.description || "";
+  if (typeof task.remaining_today !== "undefined") {
+    document.getElementById("info").textContent = `Übrig heute: ${task.remaining_today}`;
+  }
+}
+
+function cancelTask() {
+  window.close();
+}
+
+async function doneTask() {
+  if (!task?.id) return;
+
+  const res = await fetch("/Lumora/php/complete_task.php", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ quest_id: task.id })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert(data.error || "Could not complete task");
+    return;
+  }
+
+  // Fenster schließen und Startseite aktualisieren
+  if (window.opener) window.opener.location.reload();
+  window.close();
+}
+</script>
+</body>
+</html>

@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Island of Self-Love</title>
   <link rel="stylesheet" href="../../css/style_island_selflove.css" />
+  <script src="../../js/starttask.js"></script>
 </head>
 <body>
     <div class="world">
@@ -60,55 +61,10 @@
     <!-- Rechte Task-Box -->
     <div class="tasks-panel">
       <div class="tasks-header">Leftover Tasks: <span>3</span></div>
-      <button class="btn-start" onclick="startTask('mindfulness')">Start task</button>
-    </div>
+      <button class="btn-start" onclick="startTask()">Start task</button>
 
 
   </div>
-  <script>
-  async function startTask(category = "") {
-    const url = category ? `../../php/start_task.php?category=${encodeURIComponent(category)}` : `../../php/start_task.php`;
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.error || "Could not start task");
-      return;
-    }
-
-    // Hier Task-Popup füllen
-    document.querySelector("#taskTitle").textContent = data.title;
-    document.querySelector("#taskDesc").textContent = data.description;
-
-    // quest_id merken fürs Done
-    window.activeQuestId = data.id;
-
-    openTaskModal(); // deine bestehende Funktion / oder UI anzeigen
-  }
-
-async function completeTask() {
-  if (!window.activeQuestId) return;
-
-  const res = await fetch("../../php/complete_task.php", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ quest_id: window.activeQuestId })
-  });
-
-  const data = await res.json();
-  if (!res.ok) {
-    alert(data.error || "Could not complete task");
-    return;
-  }
-
-  // UI: Lightpoints aktualisieren
-  document.querySelector("#lightpointsValue").textContent = data.total_lightpoints;
-
-  // Danach am einfachsten: Seite neu laden, damit Inseln-locked/unlocked korrekt neu gerendert werden
-  // (oder du hast eine renderIslands() Funktion)
-  window.location.reload();
-}
-</script>
-
+  
 </body>
 </html>
