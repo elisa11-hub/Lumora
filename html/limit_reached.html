@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Heute fertig</title>
+  <style>
+    body{margin:0;font-family:system-ui,Arial;background:#071f26;color:#fff;height:100vh;display:flex;align-items:center;justify-content:center}
+    .card{width:820px;max-width:92vw;min-height:420px;border-radius:18px;overflow:hidden;
+      background: radial-gradient(1000px 600px at 50% 10%, rgba(0,255,255,.12), transparent),
+                  linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
+      padding:28px;
+      text-align:center;
+      display:flex;flex-direction:column;justify-content:center;gap:14px;
+    }
+    h1{margin:0;font-size:34px}
+    p{margin:0;opacity:.88;font-size:16px;line-height:1.5}
+    .btns{margin-top:12px;display:flex;gap:12px;justify-content:center}
+    button{padding:10px 16px;border:0;border-radius:12px;cursor:pointer;font-weight:600}
+    .btnPrimary{background:rgba(0,255,255,.25);color:#eaffff;border:1px solid rgba(0,255,255,.35)}
+    .btnGhost{background:rgba(255,255,255,.10);color:#fff}
+  </style>
+</head>
+<body>
+  <div class="card">
+   <h1>You've done everything for today 🌙</h1>
+    <p>You can do a maximum of <b>3 tasks</b> per day.</p>
+    <p>Come back tomorrow – new tasks will be waiting for you ✨</p>
+    <div class="btns">
+      <button class="btnGhost" onclick="window.close()">Close</button>
+      <button class="btnPrimary" onclick="goBack()">Back</button>
+    </div>
+  </div>
+
+  <script>
+    function goBack(){
+      if (window.opener) window.opener.location.reload();
+      window.close();
+    }
+  </script>
+</body>
+</html>

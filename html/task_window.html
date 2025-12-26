@@ -191,9 +191,14 @@ async function doneTask() {
 
   const data = await res.json();
   if (!res.ok) {
-    alert(data.error || "Could not complete task");
+  if (data?.error === "limit_reached") {
+    window.location.href = "/Lumora/html/limit_reached.html";
     return;
   }
+  alert(data.error || "Could not complete task");
+  return;
+}
+
 
   if (window.opener) window.opener.location.reload();
   window.close();

@@ -8,8 +8,6 @@
 </head>
 <body>
     <div class="world">
-    <!-- Insel (falls extra Bild) -->
-    <img src="../../images/island-selflove-main.png" alt="Heart Island" class="island">
 
     <!-- Titel (kann auch als Bild sein) -->
     <img src="../../images/insel1_schrift.png" alt="Island of Self-Love" class="title-text">
@@ -74,9 +72,14 @@ async function startTask(category = "") {
     const data = await res.json();
 
     if (!res.ok) {
-      alert(data.error || "Could not start task");
-      return;
-    }
+  if (data?.error === "limit_reached") {
+    window.open("/Lumora/html/limit_reached.html", "_blank", "width=900,height=600");
+    return;
+  }
+  alert(data.error || "Could not start task");
+  return;
+}
+
 
     localStorage.setItem("lumora_active_task", JSON.stringify(data));
 
