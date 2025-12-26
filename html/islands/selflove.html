@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Island of Self-Love</title>
   <link rel="stylesheet" href="../../css/style_island_selflove.css" />
-  <script src="../../js/starttask.js"></script>
+
 </head>
 <body>
     <div class="world">
@@ -62,9 +62,36 @@
     <div class="tasks-panel">
       <div class="tasks-header">Leftover Tasks: <span>3</span></div>
       <button class="btn-start" onclick="startTask()">Start task</button>
+     </div>
+     <script>
+async function startTask(category = "") {
+  try {
+    const url = category
+      ? `/Lumora/php/start_task.php?category=${encodeURIComponent(category)}`
+      : `/Lumora/php/start_task.php`;
 
+    const res = await fetch(url, { credentials: "same-origin" });
+    const data = await res.json();
 
-  </div>
-  
+    if (!res.ok) {
+      alert(data.error || "Could not start task");
+      return;
+    }
+
+    localStorage.setItem("lumora_active_task", JSON.stringify(data));
+
+    // WICHTIG: task_window.html muss genau hier liegen:
+    // C:\xampp\htdocs\Lumora\html\task_window.html
+    const w = window.open("/Lumora/html/task_window.html", "_blank", "width=900,height=600");
+
+    if (!w) {
+      alert("Popup wurde blockiert. Bitte Popups für localhost erlauben.");
+    }
+  } catch (e) {
+    alert("JS Fehler: " + e.message);
+  }
+}
+</script>
+
 </body>
 </html>

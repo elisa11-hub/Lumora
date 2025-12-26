@@ -4,37 +4,176 @@
   <meta charset="UTF-8" />
   <title>Task</title>
   <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#0b2b33; color:#fff; display:flex; align-items:center; justify-content:center; height:100vh;}
-    .card { width: 720px; max-width: 90vw; background: rgba(0,0,0,0.35); padding: 24px; border-radius: 16px; text-align:center; }
-    h1 { margin: 0 0 10px; }
-    p { opacity: 0.9; }
-    .btns { display:flex; gap:12px; justify-content:center; margin-top:18px; }
-    button { padding: 10px 18px; border:0; border-radius: 10px; cursor:pointer; }
+    body{margin:0;font-family:system-ui,Arial;background:#071f26;color:#fff;height:100vh;display:flex;align-items:center;justify-content:center}
+    .wrap{width:920px;max-width:92vw;min-height:520px;border-radius:18px;overflow:hidden;position:relative;
+      background: radial-gradient(1200px 600px at 50% 10%, rgba(0,255,255,.15), transparent),
+                  linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow:0 20px 60px rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .top{padding:22px 26px;display:flex;justify-content:space-between;align-items:center}
+    .badge{font-size:12px;letter-spacing:.6px;text-transform:uppercase;opacity:.85}
+    .content{padding:14px 26px 26px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    .card{border-radius:16px;padding:18px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08)}
+    h1{margin:0 0 10px;font-size:28px}
+    p{margin:0;opacity:.88;line-height:1.45}
+    .timerBox{display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center}
+    .ring{width:180px;height:180px;border-radius:50%;display:grid;place-items:center;position:relative}
+    .ring::before{content:"";position:absolute;inset:0;border-radius:50%;
+      background:conic-gradient(rgba(0,255,255,.95) var(--p,0%), rgba(255,255,255,.10) 0);
+      -webkit-mask:radial-gradient(circle, transparent 62%, #000 63%);
+              mask:radial-gradient(circle, transparent 62%, #000 63%);
+    }
+    .time{font-size:34px;font-weight:700;letter-spacing:1px}
+    .sub{font-size:13px;opacity:.8}
+    .btns{display:flex;gap:12px;justify-content:flex-end;margin-top:14px}
+    button{padding:10px 16px;border:0;border-radius:12px;cursor:pointer;font-weight:600}
+    .btnGhost{background:rgba(255,255,255,.10);color:#fff}
+    .btnPrimary{background:rgba(0,255,255,.25);color:#eaffff;border:1px solid rgba(0,255,255,.35)}
+    .btnPrimary:disabled{opacity:.45;cursor:not-allowed}
+    .designIcon{font-size:46px;opacity:.95}
+
+    /* 4 “Themes” je Design */
+    .theme-stopwatch{background:
+      radial-gradient(800px 480px at 30% 20%, rgba(255,200,0,.18), transparent),
+      radial-gradient(900px 520px at 70% 10%, rgba(0,255,255,.12), transparent),
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));}
+    .theme-motion{background:
+      radial-gradient(900px 520px at 30% 20%, rgba(0,255,120,.16), transparent),
+      radial-gradient(900px 520px at 80% 15%, rgba(0,255,255,.10), transparent),
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));}
+    .theme-breath{background:
+      radial-gradient(900px 520px at 30% 15%, rgba(180,120,255,.18), transparent),
+      radial-gradient(900px 520px at 75% 10%, rgba(0,255,255,.10), transparent),
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));}
+    .theme-calm{background:
+      radial-gradient(900px 520px at 25% 10%, rgba(0,180,255,.18), transparent),
+      radial-gradient(900px 520px at 80% 15%, rgba(0,255,255,.08), transparent),
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));}
+
+    .hint{margin-top:10px;font-size:13px;opacity:.85}
+    .steps{margin-top:10px;font-size:14px;opacity:.9}
+    .steps li{margin:6px 0}
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1 id="title">Task</h1>
-    <p id="desc"></p>
-    <div class="btns">
-      <button onclick="cancelTask()">Cancel</button>
-      <button onclick="doneTask()">Done</button>
+  <div class="wrap" id="wrap">
+    <div class="top">
+      <div class="badge" id="badge">TASK</div>
+      <div class="badge" id="remain"></div>
     </div>
-    <p id="info" style="margin-top:14px; opacity:.8;"></p>
+
+    <div class="content">
+      <div class="card">
+        <h1 id="title">Task</h1>
+        <p id="desc"></p>
+        <div class="hint" id="hint"></div>
+        <ul class="steps" id="steps" style="display:none;"></ul>
+
+        <div class="btns">
+          <button class="btnGhost" onclick="cancelTask()">Cancel</button>
+          <button class="btnPrimary" id="doneBtn" onclick="doneTask()" disabled>Done</button>
+        </div>
+      </div>
+
+      <div class="card timerBox">
+        <div class="designIcon" id="icon">⏱️</div>
+        <div class="ring" id="ring" style="--p:0%">
+          <div style="text-align:center">
+            <div class="time" id="time">00:00</div>
+            <div class="sub" id="sub">Timer läuft…</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 <script>
 const task = JSON.parse(localStorage.getItem("lumora_active_task") || "null");
 
-if (!task) {
-  document.getElementById("title").textContent = "Kein Task gefunden";
-  document.getElementById("desc").textContent = "Bitte starte den Task erneut.";
-} else {
-  document.getElementById("title").textContent = task.title || "Task";
-  document.getElementById("desc").textContent = task.description || "";
-  if (typeof task.remaining_today !== "undefined") {
-    document.getElementById("info").textContent = `Übrig heute: ${task.remaining_today}`;
+const wrap = document.getElementById("wrap");
+const badge = document.getElementById("badge");
+const remain = document.getElementById("remain");
+const titleEl = document.getElementById("title");
+const descEl = document.getElementById("desc");
+const hintEl = document.getElementById("hint");
+const stepsEl = document.getElementById("steps");
+const iconEl = document.getElementById("icon");
+const timeEl = document.getElementById("time");
+const subEl = document.getElementById("sub");
+const ring = document.getElementById("ring");
+const doneBtn = document.getElementById("doneBtn");
+
+let total = 0;
+let left = 0;
+let timer = null;
+
+function mmss(s){
+  const m = Math.floor(s/60);
+  const r = s%60;
+  return String(m).padStart(2,'0') + ":" + String(r).padStart(2,'0');
+}
+
+function applyDesign(variant){
+  // default fallback
+  wrap.classList.remove("theme-stopwatch","theme-motion","theme-breath","theme-calm");
+
+  if (variant === "stopwatch") {
+    wrap.classList.add("theme-stopwatch");
+    iconEl.textContent = "⏱️";
+    hintEl.textContent = "Tipp: Stell dir einen ruhigen Rhythmus vor – Hauptsache du bleibst in Bewegung.";
+  } else if (variant === "motion") {
+    wrap.classList.add("theme-motion");
+    iconEl.textContent = "🌀";
+    hintEl.textContent = "Langsam & kontrolliert – keine Schmerzen erzwingen.";
+    stepsEl.style.display = "block";
+    stepsEl.innerHTML = `
+      <li>30s Schulterkreisen nach hinten</li>
+      <li>30s Schulterkreisen nach vorne</li>
+    `;
+  } else if (variant === "breath") {
+    wrap.classList.add("theme-breath");
+    iconEl.textContent = "🌬️";
+    hintEl.textContent = "Box Breathing: 4 ein – 4 halten – 4 aus – 4 halten.";
+  } else if (variant === "calm") {
+    wrap.classList.add("theme-calm");
+    iconEl.textContent = "🫧";
+    hintEl.textContent = "Nur wahrnehmen, nicht bewerten. Wenn Gedanken kommen: freundlich zurück.";
+    stepsEl.style.display = "block";
+    stepsEl.innerHTML = `
+      <li>Stirn & Kiefer entspannen</li>
+      <li>Schultern sinken lassen</li>
+      <li>Bauch ruhig werden lassen</li>
+      <li>Beine/ Füße spüren</li>
+    `;
+  } else {
+    wrap.classList.add("theme-stopwatch");
+    iconEl.textContent = "✨";
   }
+}
+
+function startTimer(seconds){
+  total = seconds;
+  left = seconds;
+  timeEl.textContent = mmss(left);
+  ring.style.setProperty("--p", "0%");
+  doneBtn.disabled = true;
+
+  timer = setInterval(() => {
+    left--;
+    if (left < 0) left = 0;
+    timeEl.textContent = mmss(left);
+
+    const p = Math.round(((total - left) / total) * 100);
+    ring.style.setProperty("--p", p + "%");
+
+    if (left === 0) {
+      clearInterval(timer);
+      timer = null;
+      subEl.textContent = "Fertig! Du kannst jetzt auf Done klicken.";
+      doneBtn.disabled = false;
+    }
+  }, 1000);
 }
 
 function cancelTask() {
@@ -46,20 +185,34 @@ async function doneTask() {
 
   const res = await fetch("/Lumora/php/complete_task.php", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: {"Content-Type":"application/json"},
     body: JSON.stringify({ quest_id: task.id })
   });
 
   const data = await res.json();
-
   if (!res.ok) {
     alert(data.error || "Could not complete task");
     return;
   }
 
-  // Fenster schließen und Startseite aktualisieren
   if (window.opener) window.opener.location.reload();
   window.close();
+}
+
+if (!task) {
+  titleEl.textContent = "Kein Task gefunden";
+  descEl.textContent = "Bitte starte den Task erneut.";
+  subEl.textContent = "";
+} else {
+  badge.textContent = (task.category || "TASK").toUpperCase();
+  titleEl.textContent = task.title || "Task";
+  descEl.textContent = task.description || "";
+  if (typeof task.remaining_today !== "undefined") {
+    remain.textContent = `Übrig heute: ${task.remaining_today}`;
+  }
+
+  applyDesign(task.design_variant || "default");
+  startTimer(parseInt(task.duration_seconds || 60, 10));
 }
 </script>
 </body>

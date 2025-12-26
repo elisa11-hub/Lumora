@@ -61,16 +61,23 @@ try {
     exit;
   }
 
+$duration = isset($quest['duration_seconds']) ? (int)$quest['duration_seconds'] : 60;
+$variant  = isset($quest['design_variant']) ? $quest['design_variant'] : 'stopwatch';
+
   // Quest-ID in Session merken, damit man nicht irgendeine ID “faken” kann
   $_SESSION['active_quest_id'] = (int)$quest['id_quests'];
 $remaining = 3 - $todayPoints;
 echo json_encode([
   'id' => (int)$quest['id_quests'],
+  'islands_id_islands' => (int)$quest['islands_id_islands'],
   'title' => $quest['titel'],
   'description' => $quest['description'],
   'category' => $quest['category'],
+  'duration_seconds' => $duration,
+  'design_variant' => $variant,
   'remaining_today' => $remaining
 ]);
+
 
 } catch (Throwable $e) {
   http_response_code(500);
