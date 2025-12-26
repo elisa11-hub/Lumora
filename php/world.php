@@ -73,7 +73,7 @@ $unlockedIds = [];
 $stmt = $pdo->prepare("
     SELECT islands_id_islands
     FROM user_has_islands
-    WHERE user_id_user = :uwid
+    WHERE user_id_user = :uid
 ");
 $stmt->execute(['uid' => $userId]);
 $unlockedIds = array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN));
@@ -160,7 +160,7 @@ foreach ($islands as $island) {
 
     // Persistieren, wenn gerade (durch Punkte) freigeschaltet
     if ($isUnlocked && !in_array($id, $unlockedIds, true)) {
-        $insStmt->execute([':uid' => $userId, ':iid' => $id]);
+        $insStmt->execute(['uid' => $userId, 'iid' => $id]);
         $unlockedIds[] = $id;
     }
 
