@@ -36,7 +36,7 @@ $category = isset($_GET['category']) ? trim($_GET['category']) : '';
 try {
   if ($category !== '') {
     $stmt = $pdo->prepare("
-      SELECT id_quests, islands_id_islands, titel, description, category
+      SELECT id_quests, islands_id_islands, titel, description, category, duration_seconds, design_variant
       FROM quests
       WHERE category = :cat
       ORDER BY RAND()
@@ -46,7 +46,7 @@ try {
   } else {
     // komplett random aus allen Kategorien
     $stmt = $pdo->query("
-      SELECT id_quests, islands_id_islands, titel, description, category
+      SELECT id_quests, islands_id_islands, titel, description, category, duration_seconds, design_variant
       FROM quests
       ORDER BY RAND()
       LIMIT 1
