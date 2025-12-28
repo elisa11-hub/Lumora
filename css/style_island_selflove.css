@@ -16,6 +16,22 @@ body {
   color: #e3f9ff;
 }
 
+.placement-area{
+  position: relative;
+  width: 800px;          /* oder responsive */
+  height: 450px;
+  border: 2px dashed rgba(255,255,255,.35);
+  border-radius: 16px;
+  overflow: hidden;      /* wichtig: nix außerhalb sichtbar */
+}
+.placed-item{
+  position:absolute;
+  width: 80px;           /* item-größe */
+  height: 80px;
+  user-select: none;
+  pointer-events: none;  /* damit click nicht blockiert */
+}
+
 
 /* Spielfeld */
 .screen {

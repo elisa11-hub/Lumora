@@ -16,9 +16,8 @@
     <img src="../../images/lumora-logo.png" alt="Lumora" class="logo">
 
     </div>
+    <div id="placementArea" class="placement-area"></div>
   <div class="screen">
-
-
 
     <!-- Linke Item-Box -->
     <div class="items-panel">
@@ -85,6 +84,87 @@ async function startTask(category = "") {
     alert("JS Fehler: " + e.message);
   }
 }
+</script>
+<script>
+async function loadPlacedItems() {
+  const res = await fetch("/Lumora/php/get_placed_items.php", { credentials: "same-origin" });
+  const data = await res.json();
+  if (!res.ok) return;
+
+  const area = document.getElementById("placementArea");
+  area.querySelectorAll(".placed-item").forEach(el => el.remove());
+
+  for (const it of data.items) {
+    const img = document.createElement("img");
+    img.className = "placed-item";
+    img.src = it.asset_path; // z.B. "/Lumora/assets/items/flower.png"
+    img.alt = it.name;
+
+    // relative 0..1 => pixel
+    const x = it.pos_x * area.clientWidth;
+    const y = it.pos_y * area.clientHeight;
+
+    img.style.left = `${x}px`;
+    img.style.top  = `${y}px`;
+
+    area.appendChild(img);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadPlacedItems);
+</script>
+<script>
+let selectedItemId = null;
+
+function selectItem(itemId) {
+  selectedItemId = itemId;
+}
+
+// Klick in den Rahmen = platzieren
+document.addEventListener("DOMContentLoaded", () => {
+  const area = document.getElementById("placementArea");
+
+  area.addEventListener("click", async (e) => {
+    if (!selectedItemId) return;
+
+    const rect = area.getBoundingClientRect();
+    const xPx = e.clientX - rect.left;
+    const yPx = e.clientY - rect.top;
+
+    // in relative Werte umrechnen (0..1)
+    const posX = xPx / rect.width;
+    const posY = yPx / rect.height;
+
+    const res = await fetch("/Lumora/php/place_item.php", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      credentials: "same-origin",
+      body: JSON.stringify({
+        item_id: selectedItemId,
+        pos_x: posX,
+        pos_y: posY
+      })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      if (data.error === "not_enough_lightpoints") {
+        alert("Du hast keine Lightpoints mehr, um ein Item zu platzieren.");
+      } else {
+        alert(data.error || "Fehler beim Platzieren");
+      }
+      return;
+    }
+
+    // UI aktualisieren
+    const lpEl = document.getElementById("lightpointsValue");
+    if (lpEl) lpEl.textContent = data.total_lightpoints;
+
+    selectedItemId = null;
+    await loadPlacedItems();
+  });
+});
 </script>
 
 </body>
