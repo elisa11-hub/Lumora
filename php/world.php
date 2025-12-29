@@ -104,7 +104,7 @@ $insStmt = $pdo->prepare("
 
     <!-- Emergency Button -->
     <div class="topbar-left">
-       <a href="/Lumora/html/emergency.html" class="btn topbar-emergency">Emergency</a>
+        <a href="/Lumora/html/emergency.html" class="btn topbar-emergency" onclick="window.open(this.href, 'emergency', 'width=480,height=700'); return false;">Emergency</a>
     </div>
 
     <!-- Logo -->

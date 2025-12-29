@@ -188,3 +188,21 @@ body {
 .help-text {
   font-size: 14px;
 }
+
+/* Quick fix: globaler Background darf Island nicht überdecken */
+body {
+  background: none !important;
+}
+
+/* Quick fix: Overlay darf Inhalte nicht verdecken */
+.overlay {
+  z-index: 0 !important;
+}
+
+/* Topbar und Inhalt über Overlay */
+.topbar,
+.world,
+.screen {
+  position: relative;
+  z-index: 2 !important;
+}
