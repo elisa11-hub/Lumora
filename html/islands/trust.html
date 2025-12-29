@@ -7,6 +7,35 @@
 </head>
 <body>
 
+  <div class="overlay"></div>
+<!-- TOPBAR -->
+    <header class="topbar">
+
+        <!-- Emergency Button -->
+        <div class="topbar-left">
+          <a href="/Lumora/html/emergency.html" class="btn topbar-emergency">Emergency</a>
+        </div>
+
+        <!-- Logo -->
+        <div class="topbar-center">
+            <img src="../images/lumora-logo.png" alt="Lumora Logo" class="topbar-logo">
+        </div>
+
+        <!-- Username, Lightpoints, Logout -->
+        <div class="topbar-right">
+
+            <span class="topbar-username">Hi, <?php echo htmlspecialchars($username); ?></span>
+
+            <div class="topbar-lightpoints">
+                <span class="topbar-lightpoints-label">Lightpoints</span>
+                <span class="topbar-lightpoints-value"><?php echo $lightpoints; ?></span>
+            </div>
+
+            
+            <a href="auth/logout.php" class="btn topbar-button">Logout</a>
+        </div>
+    </header>
+
   <div class="world">
 
     <!-- Insel -->

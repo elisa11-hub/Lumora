@@ -81,8 +81,8 @@ $unlockedIds = array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN));
 // 3) Optional: automatisch neue Inseln persistieren, sobald Schwelle erreicht ist
 // (INSERT IGNORE klappt gut, wenn (user_id_user, islands_id_islands) UNIQUE/PK ist)
 $insStmt = $pdo->prepare("
-    INSERT IGNORE INTO user_has_islands (user_id_user, islands_id_islands, unlocked_at)
-    VALUES (:uid, :iid, NOW())
+    INSERT IGNORE INTO user_has_islands (user_id_user, islands_id_islands)
+    VALUES (:uid, :iid)
 ");
 
 
@@ -104,7 +104,7 @@ $insStmt = $pdo->prepare("
 
     <!-- Emergency Button -->
     <div class="topbar-left">
-       <a href="/Lumora/php/emergency.php" class="btn topbar-emergency">Emergency</a>
+       <a href="/Lumora/html/emergency.html" class="btn topbar-emergency">Emergency</a>
     </div>
 
     <!-- Logo -->
