@@ -19,17 +19,19 @@
     <div id="placementArea" class="placement-area"></div>
   <div class="screen">
 
+
     <!-- Linke Item-Box -->
     <div class="items-panel">
       <div class="items-header">Items:</div>
       <div class="item-row">
-        <img src="../../images/item-house-selflove.png" draggable="true" alt="House" class="item-img">
+        <img src="../../images/item-house-selflove.png" draggable="true" data-item-id="1" alt="House" class="item-img">
+
         <span class="item-count">1</span>
         <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
 
       <div class="item-row">
-        <img src="../../images/item-tree-selflove.png" alt="Tree" class="item-img">
+        <img src="../../images/item-tree-selflove.png" draggable="true" data-item-id="2" alt="Tree" class="item-img">
         <span class="item-count">1</span>
         <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
@@ -37,13 +39,6 @@
 
     <!-- Back -->
     <a href="../../php/world.php" class="btn-back">Back</a>
-    <!-- Help -->
-    <div class="help-area">
-      <img src="../../images/lichtgeist.png"
-           alt="Help"
-           class="help-icon">
-      <div class="help-text">Need help?</div>
-    </div>
 
     <!-- Rechte Task-Box -->
     <div class="tasks-panel">
@@ -51,120 +46,88 @@
       <button class="btn-start" onclick="startTask()">Start task</button>
      </div>
      <script>
-async function startTask(category = "") {
-  try {
-    const url = category
-      ? `/Lumora/php/start_task.php?category=${encodeURIComponent(category)}`
-      : `/Lumora/php/start_task.php`;
+const ISLAND_ID = 1; // Selflove
 
-    const res = await fetch(url, { credentials: "same-origin" });
-    const data = await res.json();
+const area = document.getElementById("placementArea");
 
-    if (!res.ok) {
-  if (data?.error === "limit_reached") {
-    window.open("/Lumora/html/limit_reached.html", "_blank", "width=900,height=600");
+// Dragstart von Items (die Bilder in deiner Box)
+document.querySelectorAll(".item-img[draggable='true']").forEach(img => {
+  img.addEventListener("dragstart", (e) => {
+    const id = img.dataset.itemId;
+    e.dataTransfer.setData("text/plain", id);
+  });
+});
+
+// Drop erlauben
+area.addEventListener("dragover", (e) => e.preventDefault());
+
+// Drop => speichern
+area.addEventListener("drop", async (e) => {
+  e.preventDefault();
+
+  const itemId = parseInt(e.dataTransfer.getData("text/plain"), 10);
+  if (!itemId) return;
+
+  const rect = area.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  let posX = x / rect.width;
+  let posY = y / rect.height;
+
+  // clamp 0..1
+  posX = Math.max(0, Math.min(1, posX));
+  posY = Math.max(0, Math.min(1, posY));
+
+  const res = await fetch("/Lumora/php/place_item.php", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    credentials: "same-origin",
+    body: JSON.stringify({ item_id: itemId, island_id: ISLAND_ID, pos_x: posX, pos_y: posY })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    if (data.error === "not_enough_lightpoints") {
+      alert("Du hast keine Lightpoints mehr, um ein Item zu platzieren.");
+    } else {
+      alert(data.error || "Fehler beim Platzieren");
+    }
     return;
   }
-  alert(data.error || "Could not start task");
-  return;
-}
 
+  // optional: Lightpoints UI updaten
+  const lpEl = document.getElementById("lightpointsValue");
+  if (lpEl) lpEl.textContent = data.total_lightpoints;
 
-    localStorage.setItem("lumora_active_task", JSON.stringify(data));
+  await loadPlacedItems();
+});
 
-    // WICHTIG: task_window.html muss genau hier liegen:
-    // C:\xampp\htdocs\Lumora\html\task_window.html
-    const w = window.open("/Lumora/html/task_window.html", "_blank", "width=900,height=600");
-
-    if (!w) {
-      alert("Popup wurde blockiert. Bitte Popups für localhost erlauben.");
-    }
-  } catch (e) {
-    alert("JS Fehler: " + e.message);
-  }
-}
-</script>
-<script>
+// Items laden und rendern
 async function loadPlacedItems() {
-  const res = await fetch("/Lumora/php/get_placed_items.php", { credentials: "same-origin" });
+  const res = await fetch(`/Lumora/php/get_placed_items.php?island_id=${ISLAND_ID}`, {
+    credentials: "same-origin"
+  });
   const data = await res.json();
   if (!res.ok) return;
 
-  const area = document.getElementById("placementArea");
-  area.querySelectorAll(".placed-item").forEach(el => el.remove());
+  // alte entfernen
+  area.querySelectorAll(".placed-item").forEach(n => n.remove());
 
+  const rect = area.getBoundingClientRect();
   for (const it of data.items) {
-    const img = document.createElement("img");
-    img.className = "placed-item";
-    img.src = it.asset_path; // z.B. "/Lumora/assets/items/flower.png"
-    img.alt = it.name;
+    const el = document.createElement("img");
+    el.className = "placed-item";
+    el.src = it.asset_path;   // aus DB
+    el.alt = it.name;
 
-    // relative 0..1 => pixel
-    const x = it.pos_x * area.clientWidth;
-    const y = it.pos_y * area.clientHeight;
+    el.style.left = (it.pos_x * rect.width) + "px";
+    el.style.top  = (it.pos_y * rect.height) + "px";
 
-    img.style.left = `${x}px`;
-    img.style.top  = `${y}px`;
-
-    area.appendChild(img);
+    area.appendChild(el);
   }
 }
 
 document.addEventListener("DOMContentLoaded", loadPlacedItems);
 </script>
-<script>
-let selectedItemId = null;
-
-function selectItem(itemId) {
-  selectedItemId = itemId;
-}
-
-// Klick in den Rahmen = platzieren
-document.addEventListener("DOMContentLoaded", () => {
-  const area = document.getElementById("placementArea");
-
-  area.addEventListener("click", async (e) => {
-    if (!selectedItemId) return;
-
-    const rect = area.getBoundingClientRect();
-    const xPx = e.clientX - rect.left;
-    const yPx = e.clientY - rect.top;
-
-    // in relative Werte umrechnen (0..1)
-    const posX = xPx / rect.width;
-    const posY = yPx / rect.height;
-
-    const res = await fetch("/Lumora/php/place_item.php", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      credentials: "same-origin",
-      body: JSON.stringify({
-        item_id: selectedItemId,
-        pos_x: posX,
-        pos_y: posY
-      })
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      if (data.error === "not_enough_lightpoints") {
-        alert("Du hast keine Lightpoints mehr, um ein Item zu platzieren.");
-      } else {
-        alert(data.error || "Fehler beim Platzieren");
-      }
-      return;
-    }
-
-    // UI aktualisieren
-    const lpEl = document.getElementById("lightpointsValue");
-    if (lpEl) lpEl.textContent = data.total_lightpoints;
-
-    selectedItemId = null;
-    await loadPlacedItems();
-  });
-});
-</script>
-
-</body>
-</html>
