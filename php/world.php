@@ -167,6 +167,7 @@ foreach ($islands as $island) {
     // Dateinamen/Assets: passe das an deine echten Dateien an
     // Beispiel: ../html/islands/trust.html und ../images/island-trust.png
     $slug = slugify($name); // wenn name z.B. "Self-Love" -> "selflove"
+    $soundKey = !empty($island['theme_sound']) ? $island['theme_sound'] : $slug; // Fallback auf Slug wenn kein theme_sound gesetzt
     $href = "../html/islands/{$slug}.html";
     $img  = "../images/island-{$slug}.png";
 
@@ -183,6 +184,8 @@ foreach ($islands as $island) {
     aria-disabled="<?= $ariaDisabled ?>"
     tabindex="<?= $tabIndex ?>"
     data-unlock-cost="<?= (int)$cost ?>"
+    $soundKey = $island['theme_sound'] ?: $slug;
+    data-island="<?= htmlspecialchars($soundKey) ?>"
   >
     <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($name) ?>" class="island-image">
 
@@ -198,6 +201,21 @@ foreach ($islands as $island) {
 
 
 </main>
+
+<!-- JavaScript für Insel-Auswahl und Audio -->
+<script type="module">
+  import { unlockAudio, setSelectedIsland } from "/Lumora/js/audioManager.js";
+
+  document.querySelectorAll("a.island.unlocked[data-island]").forEach(card => {
+    card.addEventListener("click", async () => {
+      await unlockAudio();
+      setSelectedIsland(card.dataset.island);
+    });
+  });
+</script>
+
+<script type="module" src="/Lumora/js/audioBootstrap.js"></script>
+
 
 </body>
 </html>

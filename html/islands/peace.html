@@ -105,6 +105,7 @@
     </div>
 
 
+
  <!-- Back -->
     <a href="../../php/world.php" class="btn-back">Back</a>
     <!-- Help -->
@@ -116,5 +117,38 @@
     </div>
 
   </div>
+
+  <!-- JS for audio management -->
+<script type="module">
+  import { playIsland, getSelectedIsland, unlockAudio } from "/Lumora/js/audioManager.js";
+
+  unlockAudio();
+
+  const islandId = getSelectedIsland();
+  playIsland(islandId);
+</script>
+
+<button id="enableSoundBtn" style="position:fixed;bottom:20px;right:20px;z-index:9999;">
+  🔊 Enable sound
+</button>
+
+<script type="module">
+  import { playIsland, unlockAudio } from "/Lumora/js/audioManager.js";
+
+  async function start() {
+    await unlockAudio();        // setzt sessionStorage flag
+    await playIsland("peace");  // versucht zu starten
+  }
+  // Falls blockiert: User kann klicken
+  document.getElementById("enableSoundBtn").addEventListener("click", async () => {
+    await start();
+  });
+</script>
+
+<script type="module" src="/Lumora/js/audioBootstrap.js"></script>
+
 </body>
 </html>
+
+
+
