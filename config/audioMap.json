@@ -21,7 +21,7 @@
   },
   "trust": {
     "bgm": "/audio/islands/trust/ambient-background-347405.mp3",
-    "ambience": ["/audio/islands/trust/ambience.mp3"],
+    "ambience": ["/audio/islands/trust/crystal-singing-bowl-281251.mp3"],
     "volumes": { "bgm": 0.18, "ambience": 0.10, "sfx": 0.7 }
   }
 }
