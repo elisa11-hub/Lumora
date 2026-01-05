@@ -51,17 +51,12 @@ async function initWorld() {
 
 async function initIsland() {
   const btn = ensureSoundButton();
+
+  const islandId = document.body.dataset.island;
+  if (!islandId) return;
+  setSelectedIsland(islandId);
+
   updateLabel(btn);
-
-  const islandId = getSelectedIsland(); // oder per body data-island, wenn du das später setzt
-
-  // Autostart versuchen (wenn enabled)
-  if (getAudioEnabled()) {
-    await unlockAudio();
-    const ok = await playIsland(islandId);
-    // Wenn blockiert: Button bleibt auf "Sound on"
-    if (ok) updateLabel(btn);
-  }
 
   btn.addEventListener("click", async () => {
     if (isAudioPlaying() && getAudioEnabled()) {
@@ -76,7 +71,12 @@ async function initIsland() {
   });
 }
 
+
 document.addEventListener("DOMContentLoaded", async () => {
-  if (isWorldPage()) await initWorld();
-  if (isIslandPage()) await initIsland();
+ if (document.body.dataset.island) {
+  await initIsland();
+} else {
+  await initWorld();
+}
+
 });

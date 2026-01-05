@@ -184,8 +184,7 @@ foreach ($islands as $island) {
     aria-disabled="<?= $ariaDisabled ?>"
     tabindex="<?= $tabIndex ?>"
     data-unlock-cost="<?= (int)$cost ?>"
-    $soundKey = $island['theme_sound'] ?: $slug;
-    data-island="<?= htmlspecialchars($soundKey) ?>"
+    data-island="<?= htmlspecialchars($slug) ?>"
   >
     <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($name) ?>" class="island-image">
 

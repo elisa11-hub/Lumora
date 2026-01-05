@@ -1,7 +1,7 @@
 {
   "healing": {
-    "bgm": "/audio/islands/healing/bgm.mp3",
-    "ambience": ["/audio/islands/healing/ambience.mp3"],
+    "bgm": "/audio/islands/healing/calm-piano-amp-soft-rainforest-ambience-for-deep-relaxation-402865.mp3",
+    "ambience": ["/audio/islands/healing/crystal-singing-bowl-281251.mp3"],
     "volumes": { "bgm": 0.18, "ambience": 0.10, "sfx": 0.7 }
   },
   "peace": {
@@ -10,17 +10,17 @@
     "volumes": { "bgm": 0.18, "ambience": 0.10, "sfx": 0.7 }
   },
   "selfembrace": {
-    "bgm": "/audio/islands/selfembrace/bgm.mp3",
-    "ambience": ["/audio/islands/selfembrace/ambience.mp3"],
+    "bgm": "/audio/islands/selfembrace/inspirational-calm-romantic-story-piano-375930.mp3",
+    "ambience": ["/audio/islands/selfembrace/crystal-singing-bowl-281251.mp3"],
     "volumes": { "bgm": 0.18, "ambience": 0.10, "sfx": 0.7 }
   },
   "selflove": {
-    "bgm": "/audio/islands/selflove/bgm.mp3",
-    "ambience": ["/audio/islands/selflove/ambience.mp3"],
+    "bgm": "/audio/islands/selflove/emotional-background-437820.mp3",
+    "ambience": ["/audio/islands/selflove/crystal-singing-bowl-281251.mp3"],
     "volumes": { "bgm": 0.18, "ambience": 0.10, "sfx": 0.7 }
   },
   "trust": {
-    "bgm": "/audio/islands/trust/bgm.mp3",
+    "bgm": "/audio/islands/trust/ambient-background-347405.mp3",
     "ambience": ["/audio/islands/trust/ambience.mp3"],
     "volumes": { "bgm": 0.18, "ambience": 0.10, "sfx": 0.7 }
   }
