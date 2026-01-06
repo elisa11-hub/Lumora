@@ -19,7 +19,7 @@ function ensureSoundButton() {
   btn.style.bottom = "20px";
   btn.style.right = "20px";
   btn.style.zIndex = "9999";
-  btn.className = "btn"; // wenn du willst: eigene CSS-Klasse
+  btn.className = "btn"; // ODER eigene CSS-Klasse
   document.body.appendChild(btn);
   return btn;
 }
@@ -44,8 +44,7 @@ async function initWorld() {
       // Insel merken + Audio freischalten (für spätere Seite)
       await unlockAudio();
       setSelectedIsland(card.dataset.island);
-      // optional: kleiner "select"-sound könnte hier gespielt werden
-    });
+      });
   });
 }
 
