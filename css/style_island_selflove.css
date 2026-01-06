@@ -16,21 +16,29 @@ body {
   color: #e3f9ff;
 }
 
+
+/* Drop-Bereich über der Insel (nur Inselbereich) */
 .placement-area{
-  position: relative;
-  width: 800px;          /* oder responsive */
-  height: 450px;
-  border: 2px dashed rgba(255,255,255,.35);
-  border-radius: 16px;
-  overflow: hidden;      /* wichtig: nix außerhalb sichtbar */
+  position: absolute;
+  left: 22%;
+  top: 12%;
+  width: 56%;
+  height: 68%;
+  z-index: 5;
+
+  /* Debug: Rahmen anzeigen (nur kurz) */
+  /* outline: 2px dashed rgba(255,255,255,.25); */
 }
+
+/* Items die platziert wurden */
 .placed-item{
-  position:absolute;
-  width: 80px;           /* item-größe */
+  position: absolute;
+  width: 80px;
   height: 80px;
+  pointer-events: none; /* damit nichts blockiert */
   user-select: none;
-  pointer-events: none;  /* damit click nicht blockiert */
 }
+
 /* Drop-Bereich über der Insel (nur Inselbereich) */
 .placement-area{
   position: absolute;

@@ -54,6 +54,21 @@ try {
     echo json_encode(['error' => 'not_enough_lightpoints', 'total_lightpoints' => $total]);
     exit;
   }
+// Check: Item schon platziert?
+$already = $pdo->prepare("
+  SELECT 1 FROM user_items
+  WHERE user_id_user = :uid AND items_id_items = :iid
+  LIMIT 1
+");
+$already->execute(['uid'=>$userId, 'iid'=>$itemId]);
+
+if ($already->fetchColumn()) {
+  $pdo->rollBack();
+  http_response_code(409);
+  echo json_encode(['error' => 'item_already_placed']);
+  exit;
+}
+
 
   // 3) Insert in user_items
   $ins = $pdo->prepare("
@@ -82,3 +97,4 @@ try {
   http_response_code(500);
   echo json_encode(['error'=>'server_error']);
 }
+

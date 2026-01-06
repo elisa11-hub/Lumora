@@ -16,7 +16,7 @@
     <img src="../../images/lumora-logo.png" alt="Lumora" class="logo">
 
     </div>
-    <div id="placementArea" class="placement-area"></div>
+   
   <div class="screen">
 
 
@@ -45,6 +45,8 @@
       <div class="tasks-header">Leftover Tasks: <span>3</span></div>
       <button class="btn-start" onclick="startTask()">Start task</button>
      </div>
+
+     <div id="placementArea" class="placement-area"></div>
      <script>
 const ISLAND_ID = 1; // Selflove
 
@@ -68,16 +70,32 @@ area.addEventListener("drop", async (e) => {
   const itemId = parseInt(e.dataTransfer.getData("text/plain"), 10);
   if (!itemId) return;
 
+  const GRID_PX = 20;          // kleiner = genauer
+  const ITEM_W = 80;           // muss zu .placed-item width passen
+  const ITEM_H = 80;
+
   const rect = area.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
 
-  let posX = x / rect.width;
-  let posY = y / rect.height;
+  // Cursor-Position im Drop-Bereich:
+  let x = e.clientX - rect.left;
+  let y = e.clientY - rect.top;
 
-  // clamp 0..1
-  posX = Math.max(0, Math.min(1, posX));
-  posY = Math.max(0, Math.min(1, posY));
+  // Item zentrieren:
+  x = x - ITEM_W / 2;
+  y = y - ITEM_H / 2;
+
+  // Bounds clamp (damit Item nicht rausläuft):
+  x = Math.max(0, Math.min(rect.width - ITEM_W, x));
+  y = Math.max(0, Math.min(rect.height - ITEM_H, y));
+
+  // Snap-to-grid:
+  x = Math.round(x / GRID_PX) * GRID_PX;
+  y = Math.round(y / GRID_PX) * GRID_PX;
+
+  // in relative Werte umrechnen:
+  const posX = x / rect.width;
+  const posY = y / rect.height;
+
 
   const res = await fetch("/Lumora/php/place_item.php", {
     method: "POST",
@@ -130,4 +148,38 @@ async function loadPlacedItems() {
 }
 
 document.addEventListener("DOMContentLoaded", loadPlacedItems);
+</script>
+<script>
+async function startTask(category = "") {
+  try {
+    const url = category
+      ? `/Lumora/php/start_task.php?category=${encodeURIComponent(category)}`
+      : `/Lumora/php/start_task.php`;
+
+    const res = await fetch(url, { credentials: "same-origin" });
+    const data = await res.json();
+
+    if (!res.ok) {
+  if (data?.error === "limit_reached") {
+    window.open("/Lumora/html/limit_reached.html", "_blank", "width=900,height=600");
+    return;
+  }
+  alert(data.error || "Could not start task");
+  return;
+}
+
+
+    localStorage.setItem("lumora_active_task", JSON.stringify(data));
+
+    // WICHTIG: task_window.html muss genau hier liegen:
+    // C:\xampp\htdocs\Lumora\html\task_window.html
+    const w = window.open("/Lumora/html/task_window.html", "_blank", "width=900,height=600");
+
+    if (!w) {
+      alert("Popup wurde blockiert. Bitte Popups für localhost erlauben.");
+    }
+  } catch (e) {
+    alert("JS Fehler: " + e.message);
+  }
+}
 </script>
