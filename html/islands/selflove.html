@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Island of Self-Love</title>
+  <title>Island of Self-Loveeeeee</title>
   <link rel="stylesheet" href="../../css/style_island_selflove.css" />
 
 </head>
@@ -35,6 +35,14 @@
         <span class="item-count">1</span>
         <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
+
+      <div class="item-row">
+        <img src="../../images/boat.png" draggable="true" data-item-id="3" alt="Boat" class="item-img">
+
+        <span class="item-count">1</span>
+        <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
+      </div>
+
     </div>
 
     <!-- Back -->
@@ -42,113 +50,87 @@
 
     <!-- Rechte Task-Box -->
     <div class="tasks-panel">
-      <div class="tasks-header">Leftover Tasks: <span>3</span></div>
       <button class="btn-start" onclick="startTask()">Start task</button>
      </div>
 
      <div id="placementArea" class="placement-area"></div>
-     <script>
-const ISLAND_ID = 1; // Selflove
 
-const area = document.getElementById("placementArea");
+<script>
+(() => {
+  const area = document.getElementById("placementArea");
+  if (!area) return;
 
-// Dragstart von Items (die Bilder in deiner Box)
-document.querySelectorAll(".item-img[draggable='true']").forEach(img => {
-  img.addEventListener("dragstart", (e) => {
-    const id = img.dataset.itemId;
-    e.dataTransfer.setData("text/plain", id);
-  });
-});
-
-// Drop erlauben
-area.addEventListener("dragover", (e) => e.preventDefault());
-
-// Drop => speichern
-area.addEventListener("drop", async (e) => {
-  e.preventDefault();
-
-  const itemId = parseInt(e.dataTransfer.getData("text/plain"), 10);
-  if (!itemId) return;
-
-  const GRID_PX = 20;          // kleiner = genauer
-  const ITEM_W = 80;           // muss zu .placed-item width passen
-  const ITEM_H = 80;
-
-  const rect = area.getBoundingClientRect();
-
-  // Cursor-Position im Drop-Bereich:
-  let x = e.clientX - rect.left;
-  let y = e.clientY - rect.top;
-
-  // Item zentrieren:
-  x = x - ITEM_W / 2;
-  y = y - ITEM_H / 2;
-
-  // Bounds clamp (damit Item nicht rausläuft):
-  x = Math.max(0, Math.min(rect.width - ITEM_W, x));
-  y = Math.max(0, Math.min(rect.height - ITEM_H, y));
-
-  // Snap-to-grid:
-  x = Math.round(x / GRID_PX) * GRID_PX;
-  y = Math.round(y / GRID_PX) * GRID_PX;
-
-  // in relative Werte umrechnen:
-  const posX = x / rect.width;
-  const posY = y / rect.height;
-
-
-  const res = await fetch("/Lumora/php/place_item.php", {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    credentials: "same-origin",
-    body: JSON.stringify({ item_id: itemId, island_id: ISLAND_ID, pos_x: posX, pos_y: posY })
+  // Item-ID beim Drag mitgeben
+  document.querySelectorAll(".item-img[draggable='true']").forEach(img => {
+    img.addEventListener("dragstart", (e) => {
+      e.dataTransfer.setData("text/plain", img.dataset.itemId || "");
+    });
   });
 
-  const data = await res.json();
+  // Drop erlauben
+  area.addEventListener("dragover", (e) => e.preventDefault());
 
-  if (!res.ok) {
-    if (data.error === "not_enough_lightpoints") {
-      alert("Du hast keine Lightpoints mehr, um ein Item zu platzieren.");
-    } else {
-      alert(data.error || "Fehler beim Platzieren");
+  // Drop -> speichern
+  area.addEventListener("drop", async (e) => {
+    e.preventDefault();
+
+    const itemId = parseInt(e.dataTransfer.getData("text/plain"), 10);
+    if (!itemId) return;
+
+    const rect = area.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const posX = Math.max(0, Math.min(1, x / rect.width));
+    const posY = Math.max(0, Math.min(1, y / rect.height));
+
+    const res = await fetch("/Lumora/php/place_item.php", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      credentials: "same-origin",
+      body: JSON.stringify({ item_id: itemId, pos_x: posX, pos_y: posY })
+    });
+
+    if (!res.ok) {
+      const t = await res.text();
+      alert("Place failed: " + t);
+      return;
     }
-    return;
-  }
 
-  // optional: Lightpoints UI updaten
-  const lpEl = document.getElementById("lightpointsValue");
-  if (lpEl) lpEl.textContent = data.total_lightpoints;
-
-  await loadPlacedItems();
-});
-
-// Items laden und rendern
-async function loadPlacedItems() {
-  const res = await fetch(`/Lumora/php/get_placed_items.php?island_id=${ISLAND_ID}`, {
-    credentials: "same-origin"
+    loadPlacedItems();
   });
-  const data = await res.json();
-  if (!res.ok) return;
 
-  // alte entfernen
-  area.querySelectorAll(".placed-item").forEach(n => n.remove());
+  async function loadPlacedItems() {
+    const res = await fetch("/Lumora/php/get_placed_items.php", { credentials: "same-origin" });
+    const data = await res.json().catch(() => null);
+    if (!data?.items) return;
 
-  const rect = area.getBoundingClientRect();
-  for (const it of data.items) {
-    const el = document.createElement("img");
-    el.className = "placed-item";
-    el.src = it.asset_path;   // aus DB
-    el.alt = it.name;
+    // alte löschen
+    area.querySelectorAll(".placed-item").forEach(n => n.remove());
 
-    el.style.left = (it.pos_x * rect.width) + "px";
-    el.style.top  = (it.pos_y * rect.height) + "px";
+    const rect = area.getBoundingClientRect();
 
-    area.appendChild(el);
+    for (const it of data.items) {
+      const el = document.createElement("img");
+      el.className = "placed-item";
+      el.src = (it.asset_path || "").trim(); // bei dir ist das schon /Lumora/... -> passt
+      el.alt = it.name || "item";
+
+      // Debug:
+      el.onerror = () => console.log("BROKEN:", it.name, el.src);
+
+      el.style.left = (parseFloat(it.pos_x) * rect.width) + "px";
+      el.style.top  = (parseFloat(it.pos_y) * rect.height) + "px";
+
+      area.appendChild(el);
+    }
   }
-}
 
-document.addEventListener("DOMContentLoaded", loadPlacedItems);
+  document.addEventListener("DOMContentLoaded", loadPlacedItems);
+})();
 </script>
+
+
 <script>
 async function startTask(category = "") {
   try {
