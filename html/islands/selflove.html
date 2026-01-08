@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Island of Self-Loveeeeee</title>
+  <title>Island of Self-Love</title>
   <link rel="stylesheet" href="../../css/style_island_selflove.css" />
 
 </head>
@@ -35,14 +35,6 @@
         <span class="item-count">1</span>
         <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
-
-      <div class="item-row">
-        <img src="../../images/boat.png" draggable="true" data-item-id="3" alt="Boat" class="item-img">
-
-        <span class="item-count">1</span>
-        <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
-      </div>
-
     </div>
 
     <!-- Back -->
@@ -50,27 +42,35 @@
 
     <!-- Rechte Task-Box -->
     <div class="tasks-panel">
+      <div class="tasks-header">Leftover Tasks: <span>3</span></div>
       <button class="btn-start" onclick="startTask()">Start task</button>
      </div>
 
      <div id="placementArea" class="placement-area"></div>
 
-<script>
+     <script>
 (() => {
   const area = document.getElementById("placementArea");
   if (!area) return;
 
-  // Item-ID beim Drag mitgeben
+  // ====== EINSTELLUNGEN: "innerer Inselbereich" ======
+  // Beispiel: 10% Rand frei lassen (also nur 10%..90% ist erlaubt)
+  const INNER_MIN_X = 0.10;
+  const INNER_MAX_X = 0.90;
+  const INNER_MIN_Y = 0.10;
+  const INNER_MAX_Y = 0.90;
+
+  // ====== Dragstart: item_id mitgeben ======
   document.querySelectorAll(".item-img[draggable='true']").forEach(img => {
     img.addEventListener("dragstart", (e) => {
       e.dataTransfer.setData("text/plain", img.dataset.itemId || "");
     });
   });
 
-  // Drop erlauben
+  // ====== Drop erlauben ======
   area.addEventListener("dragover", (e) => e.preventDefault());
 
-  // Drop -> speichern
+  // ====== Drop: speichern ======
   area.addEventListener("drop", async (e) => {
     e.preventDefault();
 
@@ -81,8 +81,14 @@
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const posX = Math.max(0, Math.min(1, x / rect.width));
-    const posY = Math.max(0, Math.min(1, y / rect.height));
+    const posX = x / rect.width;
+    const posY = y / rect.height;
+
+    // 1) Inneren Bereich prüfen
+    if (posX < INNER_MIN_X || posX > INNER_MAX_X || posY < INNER_MIN_Y || posY > INNER_MAX_Y) {
+      alert("Bitte platziere das Item innerhalb des Inselbereichs.");
+      return;
+    }
 
     const res = await fetch("/Lumora/php/place_item.php", {
       method: "POST",
@@ -91,21 +97,44 @@
       body: JSON.stringify({ item_id: itemId, pos_x: posX, pos_y: posY })
     });
 
+    let data = {};
+    try { data = await res.json(); } catch {}
+
     if (!res.ok) {
-      const t = await res.text();
-      alert("Place failed: " + t);
+      // 2) Item schon platziert
+      if (res.status === 409 || data.error === "item_already_placed") {
+        alert("Dieses Item wurde bereits platziert.");
+        return;
+      }
+      // 3) Zu wenig Lightpoints
+      if (res.status === 403 || data.error === "not_enough_lightpoints") {
+        alert("Du hast zu wenig Lightpoints, um dieses Item zu platzieren.");
+        return;
+      }
+      // 4) Out of bounds (Backend)
+      if (res.status === 400 || data.error === "out_of_bounds") {
+        alert("Bitte platziere das Item innerhalb des Inselbereichs.");
+        return;
+      }
+
+      alert(data.error || "Fehler beim Platzieren.");
       return;
     }
 
+    // Erfolgreich gespeichert -> neu laden
     loadPlacedItems();
   });
 
+  // ====== Items laden + anzeigen ======
   async function loadPlacedItems() {
-    const res = await fetch("/Lumora/php/get_placed_items.php", { credentials: "same-origin" });
+    const res = await fetch("/Lumora/php/get_placed_items.php", {
+      credentials: "same-origin"
+    });
+
     const data = await res.json().catch(() => null);
     if (!data?.items) return;
 
-    // alte löschen
+    // alte entfernen
     area.querySelectorAll(".placed-item").forEach(n => n.remove());
 
     const rect = area.getBoundingClientRect();
@@ -113,10 +142,9 @@
     for (const it of data.items) {
       const el = document.createElement("img");
       el.className = "placed-item";
-      el.src = (it.asset_path || "").trim(); // bei dir ist das schon /Lumora/... -> passt
+      el.src = (it.asset_path || "").trim();   // bei dir: /Lumora/images/...
       el.alt = it.name || "item";
 
-      // Debug:
       el.onerror = () => console.log("BROKEN:", it.name, el.src);
 
       el.style.left = (parseFloat(it.pos_x) * rect.width) + "px";
@@ -129,7 +157,6 @@
   document.addEventListener("DOMContentLoaded", loadPlacedItems);
 })();
 </script>
-
 
 <script>
 async function startTask(category = "") {

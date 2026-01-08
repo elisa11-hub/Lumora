@@ -12,27 +12,34 @@ require_once __DIR__ . '/db.php';
 $userId    = (int)$_SESSION['user_id'];
 $username  = 'Traveler';
 $lightpoints = 0;
+$earnedLightpoints  = 0;   // fürs Freischalten
+$balanceLightpoints = 0;   // fürs Ausgeben
+
+
+
 
 try {
     $stmt = $pdo->prepare("
-        SELECT 
-            u.name_user,
-            u.last_login,
-            COALESCE(SUM(lp.lightpoints), 0) AS total_lightpoints
-        FROM user u
-        LEFT JOIN lightpoints lp
-            ON lp.user_id_user = u.id_user
-        WHERE u.id_user = :id
-        GROUP BY u.id_user;
-    ");
+    SELECT 
+        u.name_user,
+        u.last_login,
+        COALESCE(SUM(CASE WHEN lp.lightpoints > 0 THEN lp.lightpoints ELSE 0 END), 0) AS earned_total_lightpoints,
+        COALESCE(SUM(lp.lightpoints), 0) AS balance_lightpoints
+    FROM user u
+    LEFT JOIN lightpoints lp
+        ON lp.user_id_user = u.id_user
+    WHERE u.id_user = :id
+    GROUP BY u.id_user;
+");
     $stmt->execute([':id' => $userId]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($row) {
-        $username    = $row['name_user'];
-        $lastLogin   = $row['last_login'];
-        $lightpoints = (int)$row['total_lightpoints'];
-    }
+    $username          = $row['name_user'];
+    $lastLogin         = $row['last_login'];
+    $earnedLightpoints = (int)$row['earned_total_lightpoints'];
+    $balanceLightpoints= (int)$row['balance_lightpoints'];
+}
 } catch (PDOException $e) {
 
     // Wenn das Problem *genau* an der Spalte lightpoints liegt → Fallback ohne JOIN
@@ -156,7 +163,7 @@ foreach ($islands as $island) {
     // Freigeschaltet wenn:
     // - in user_has_islands ODER
     // - lightpoints >= unlock_cost (Schwellenlogik)
-    $isUnlocked = in_array($id, $unlockedIds, true) || ($lightpoints >= $cost);
+    $isUnlocked = in_array($id, $unlockedIds, true) || ($earnedLightpoints >= $cost);
 
     // Persistieren, wenn gerade (durch Punkte) freigeschaltet
     if ($isUnlocked && !in_array($id, $unlockedIds, true)) {
@@ -218,3 +225,4 @@ foreach ($islands as $island) {
 
 </body>
 </html>
+
