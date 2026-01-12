@@ -54,13 +54,13 @@ body {
 
 /* Items die platziert wurden */
 .placed-item{
-  position: absolute;
-  width: clamp(40px, 5vw, 80px);
-  height: clamp(40px, 5vw, 80px);
-  pointer-events: none;
-  user-select: none;
+  position:absolute;
+  width: clamp(36px, 5vw, 80px);
+  height: clamp(36px, 5vw, 80px);
+  transform: translate(-50%, -50%); 
+  pointer-events:none;
+  user-select:none;
 }
-
 
 /* Spielfeld */
 .screen{

@@ -43,13 +43,30 @@
       <div class="items-header">Items:</div>
       <div class="item-row">
         <img src="../../images/item-house-selflove.png" draggable="true" data-item-id="1" alt="House" class="item-img">
-
         <span class="item-count">1</span>
         <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
 
       <div class="item-row">
         <img src="../../images/item-tree-selflove.png" draggable="true" data-item-id="2" alt="Tree" class="item-img">
+        <span class="item-count">1</span>
+        <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
+      </div>
+
+      <div class="item-row">
+        <img src="../../images/butterfly_pink.png" draggable="true" data-item-id="3" alt="Butterfly" class="item-img">
+        <span class="item-count">1</span>
+        <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
+      </div>
+
+      <div class="item-row">
+        <img src="../../images/lamp_pink.png" draggable="true" data-item-id="4" alt="Lamp" class="item-img">
+        <span class="item-count">1</span>
+        <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
+      </div>
+
+      <div class="item-row">
+        <img src="../../images/lotus_pink.png" draggable="true" data-item-id="5" alt="Lotus" class="item-img">
         <span class="item-count">1</span>
         <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
@@ -99,8 +116,9 @@
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const posX = x / rect.width;
-    const posY = y / rect.height;
+    const posX = Math.max(0, Math.min(1, x / rect.width));
+    const posY = Math.max(0, Math.min(1, y / rect.height));
+
 
     // 1) Inneren Bereich prüfen
     if (posX < INNER_MIN_X || posX > INNER_MAX_X || posY < INNER_MIN_Y || posY > INNER_MAX_Y) {
