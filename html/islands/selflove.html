@@ -7,13 +7,31 @@
 
 </head>
 <body>
+  <div class="overlay"></div>
+<!-- TOPBAR -->
+   <header class="topbar">
+
+  <div class="topbar-left">
+    <a href="/Lumora/html/emergency.html"
+       class="btn topbar-emergency"
+       onclick="window.open(this.href,'emergency','width=480,height=700'); return false;">
+      Emergency
+    </a>
+  </div>
+
+  <div class="topbar-center">
+    <img src="../../images/lumora-logo.png" alt="Lumora Logo" class="topbar-logo">
+  </div>
+
+  <div class="topbar-right">
+    <a href="../auth/logout.html" class="btn topbar-button">Logout</a>
+  </div>
+
+</header>
     <div class="world">
 
     <!-- Titel (kann auch als Bild sein) -->
     <img src="../../images/insel1_schrift.png" alt="Island of Self-Love" class="title-text">
-
-     <!-- Logo oben rechts -->
-    <img src="../../images/lumora-logo.png" alt="Lumora" class="logo">
 
     </div>
    
@@ -155,6 +173,13 @@
   }
 
   document.addEventListener("DOMContentLoaded", loadPlacedItems);
+  let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(loadPlacedItems, 100);
+});
+
+
 })();
 </script>
 
