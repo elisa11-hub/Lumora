@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="../../css/styles_trust.css" />
 
 </head>
-<body>
+<body data-island="Trust">
   <div class="overlay"></div>
 <!-- TOPBAR -->
    <header class="topbar">
@@ -77,11 +77,12 @@
 
     <!-- Rechte Task-Box -->
     <div class="tasks-panel">
-      <div class="tasks-header">Leftover Tasks: <span>3</span></div>
       <button class="btn-start" onclick="startTask()">Start task</button>
      </div>
 
-     <div id="placementArea" class="placement-area"></div>
+    <div id="placementArea" class="placement-area"></div>
+
+    <script type="module" src="/Lumora/js/audioBootstrap.js"></script>
 
      <script>
 (() => {
