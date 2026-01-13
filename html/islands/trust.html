@@ -2,13 +2,11 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Island of Trust</title>
-  <link rel="stylesheet" href="../../css/styles.css">
-  <link rel="stylesheet" href="../../css/style_island_trust.css">
+  <title>Island of Self-Embrace</title>
+  <link rel="stylesheet" href="../../css/styles_trust.css" />
 
 </head>
-<body data-island="trust">
-
+<body>
   <div class="overlay"></div>
 <!-- TOPBAR -->
    <header class="topbar">
@@ -30,94 +28,211 @@
   </div>
 
 </header>
+    <div class="world">
 
-  <div class="world">
-    <!-- Titel -->
-    <img src="../../images/island-trust_schrift.png" alt="Island of Trust" class="title-text">
-  </div>
+    <!-- Titel (kann auch als Bild sein) -->
+    <img src="../../images/island-trust_schrift.png" alt="Island of Self-Embrace" class="title-text">
 
+    </div>
+   
   <div class="screen">
 
-    <!-- Items links -->
+
+    <!-- Linke Item-Box -->
     <div class="items-panel">
       <div class="items-header">Items:</div>
-
       <div class="item-row">
-        <img src="../../images/house.png"
-             alt="House of Trust"
-             class="item-img">
+        <img src="../../images/house.png" draggable="true" data-item-id="6" alt="HouseTrust" class="item-img">
         <span class="item-count">1</span>
-        <img src="../../images/lightpoint-icon.png"
-             alt="Lightpoint"
-             class="item-sun">
+        <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
 
       <div class="item-row">
-        <img src="../../images/scepter.png"
-             alt="Scepter of Trust"
-             class="item-img">
+        <img src="../../images/scepter.png" draggable="true" data-item-id="7" alt="Scepter" class="item-img">
         <span class="item-count">1</span>
-        <img src="../../images/lightpoint-icon.png"
-             alt="Lightpoint"
-             class="item-sun">
+        <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
 
       <div class="item-row">
-        <img src="../../images/lamp.png"
-             alt="Lamp of Trust"
-             class="item-img">
+        <img src="../../images/lamp.png" draggable="true" data-item-id="8" alt="LampTrust" class="item-img">
         <span class="item-count">1</span>
-        <img src="../../images/lightpoint-icon.png"
-             alt="Lightpoint"
-             class="item-sun">
+        <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
 
       <div class="item-row">
-        <img src="../../images/tree.png"
-             alt="Tree of Trust"
-             class="item-img">
+        <img src="../../images/tree.png" draggable="true" data-item-id="9" alt="TreeTrust" class="item-img">
         <span class="item-count">1</span>
-        <img src="../../images/lightpoint-icon.png"
-             alt="Lightpoint"
-             class="item-sun">
+        <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
 
       <div class="item-row">
-        <img src="../../images/portal.png"
-             alt="Portal of Trust"
-             class="item-img">
+        <img src="../../images/portal.png" draggable="true" data-item-id="10" alt="PortalTrust" class="item-img">
         <span class="item-count">1</span>
-        <img src="../../images/lightpoint-icon.png"
-             alt="Lightpoint"
-             class="item-sun">
+        <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
-
     </div>
 
-   
-
-    <!-- Tasks rechts -->
-    <div class="tasks-panel">
-      <div class="tasks-header">
-        Leftover Tasks: <span>3</span>
-      </div>
-      <button class="btn-start">Start task</button>
-    </div>
-
-
- <!-- Back -->
+    <!-- Back -->
     <a href="../../php/world.php" class="btn-back">Back</a>
-    <!-- Help -->
-    <div class="help-area">
-      <img src="../../images/lichtgeist.png"
-           alt="Help"
-           class="help-icon">
-      <div class="help-text">Need help?</div>
-    </div>
 
-  </div>
+    <!-- Rechte Task-Box -->
+    <div class="tasks-panel">
+      <div class="tasks-header">Leftover Tasks: <span>3</span></div>
+      <button class="btn-start" onclick="startTask()">Start task</button>
+     </div>
+
+     <div id="placementArea" class="placement-area"></div>
+
+     <script>
+(() => {
+  const ISLAND_ID = 2;
+  const area = document.getElementById("placementArea");
+  if (!area) return;
+
+  // ====== EINSTELLUNGEN: "innerer Inselbereich" ======
+  // Beispiel: 10% Rand frei lassen (also nur 10%..90% ist erlaubt)
+  const INNER_MIN_X = 0.10;
+  const INNER_MAX_X = 0.90;
+  const INNER_MIN_Y = 0.10;
+  const INNER_MAX_Y = 0.90;
+
+  // ====== Dragstart: item_id mitgeben ======
+  document.querySelectorAll(".item-img[draggable='true']").forEach(img => {
+    img.addEventListener("dragstart", (e) => {
+      e.dataTransfer.setData("text/plain", img.dataset.itemId || "");
+    });
+  });
+
+  // ====== Drop erlauben ======
+  area.addEventListener("dragover", (e) => e.preventDefault());
+
+  // ====== Drop: speichern ======
+  area.addEventListener("drop", async (e) => {
+    e.preventDefault();
+
+    const itemId = parseInt(e.dataTransfer.getData("text/plain"), 10);
+    if (!itemId) return;
+
+    const rect = area.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const posX = Math.max(0, Math.min(1, x / rect.width));
+    const posY = Math.max(0, Math.min(1, y / rect.height));
 
 
-  <script type="module" src="/Lumora/js/audioBootstrap.js"></script>
-</body>
-</html>
+    // 1) Inneren Bereich prüfen
+    if (posX < INNER_MIN_X || posX > INNER_MAX_X || posY < INNER_MIN_Y || posY > INNER_MAX_Y) {
+      alert("Bitte platziere das Item innerhalb des Inselbereichs.");
+      return;
+    }
+
+    const res = await fetch("/Lumora/php/place_item.php", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      credentials: "same-origin",
+      body: JSON.stringify({ item_id: itemId, island_id: ISLAND_ID, pos_x: posX, pos_y: posY })
+    });
+
+    let data = {};
+    try { data = await res.json(); } catch {}
+
+    if (!res.ok) {
+      // 2) Item schon platziert
+      if (res.status === 409 || data.error === "item_already_placed") {
+        alert("Dieses Item wurde bereits platziert.");
+        return;
+      }
+      // 3) Zu wenig Lightpoints
+      if (res.status === 403 || data.error === "not_enough_lightpoints") {
+        alert("Du hast zu wenig Lightpoints, um dieses Item zu platzieren.");
+        return;
+      }
+      // 4) Out of bounds (Backend)
+      if (res.status === 400 || data.error === "out_of_bounds") {
+        alert("Bitte platziere das Item innerhalb des Inselbereichs.");
+        return;
+      }
+
+      alert(data.error || "Fehler beim Platzieren.");
+      return;
+    }
+
+    // Erfolgreich gespeichert -> neu laden
+    loadPlacedItems();
+  });
+  
+  // ====== Items laden + anzeigen ======
+  async function loadPlacedItems() {
+    const res = await fetch(`/Lumora/php/get_placed_items.php?island_id=${ISLAND_ID}`, {
+      credentials: "same-origin"
+    });
+
+    const data = await res.json().catch(() => null);
+    if (!data?.items) return;
+
+    // alte entfernen
+    area.querySelectorAll(".placed-item").forEach(n => n.remove());
+
+    const rect = area.getBoundingClientRect();
+
+    for (const it of data.items) {
+      const el = document.createElement("img");
+      el.className = "placed-item";
+      el.src = (it.asset_path || "").trim();   // bei dir: /Lumora/images/...
+      el.alt = it.name || "item";
+
+      el.onerror = () => console.log("BROKEN:", it.name, el.src);
+
+      el.style.left = (parseFloat(it.pos_x) * rect.width) + "px";
+      el.style.top  = (parseFloat(it.pos_y) * rect.height) + "px";
+
+      area.appendChild(el);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", loadPlacedItems);
+  let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(loadPlacedItems, 100);
+});
+
+
+})();
+</script>
+
+<script>
+async function startTask(category = "") {
+  try {
+    const url = category
+      ? `/Lumora/php/start_task.php?category=${encodeURIComponent(category)}`
+      : `/Lumora/php/start_task.php`;
+
+    const res = await fetch(url, { credentials: "same-origin" });
+    const data = await res.json();
+
+    if (!res.ok) {
+  if (data?.error === "limit_reached") {
+    window.open("/Lumora/html/limit_reached.html", "_blank", "width=900,height=600");
+    return;
+  }
+  alert(data.error || "Could not start task");
+  return;
+}
+
+
+    localStorage.setItem("lumora_active_task", JSON.stringify(data));
+
+    // WICHTIG: task_window.html muss genau hier liegen:
+    // C:\xampp\htdocs\Lumora\html\task_window.html
+    const w = window.open("/Lumora/html/task_window.html", "_blank", "width=900,height=600");
+
+    if (!w) {
+      alert("Popup wurde blockiert. Bitte Popups für localhost erlauben.");
+    }
+  } catch (e) {
+    alert("JS Fehler: " + e.message);
+  }
+}
+</script>

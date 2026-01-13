@@ -85,6 +85,7 @@
 
      <script>
 (() => {
+  const ISLAND_ID = 1;
   const area = document.getElementById("placementArea");
   if (!area) return;
 
@@ -130,7 +131,7 @@
       method: "POST",
       headers: {"Content-Type":"application/json"},
       credentials: "same-origin",
-      body: JSON.stringify({ item_id: itemId, pos_x: posX, pos_y: posY })
+      body: JSON.stringify({ item_id: itemId, island_id: ISLAND_ID, pos_x: posX, pos_y: posY })
     });
 
     let data = {};
@@ -163,7 +164,7 @@
 
   // ====== Items laden + anzeigen ======
   async function loadPlacedItems() {
-    const res = await fetch("/Lumora/php/get_placed_items.php", {
+    const res = await fetch(`/Lumora/php/get_placed_items.php?island_id=${ISLAND_ID}`, {
       credentials: "same-origin"
     });
 

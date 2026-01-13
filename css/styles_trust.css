@@ -9,7 +9,7 @@ body {
   align-items: center;
 
   font-family: "Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background-image: url("../images/background_selflove.png");
+  background-image: url("../images/trust.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -18,49 +18,25 @@ body {
 }
 
 /* Drop-Bereich über der Insel (nur Inselbereich) */
-.placement-area{
+.placement-area{ 
   position: absolute;
-  left: 22%;
-  top: 12%;
-  width: 56%;
-  height: 68%;
+  left: 15%;
+  top: 8%;
+  width: 70%;
+  height: 78%;
   z-index: 5;
-
-  /* Debug: Rahmen anzeigen (nur kurz) */
-  /* outline: 2px dashed rgba(255,255,255,.25); */
 }
 
-/* Items die platziert wurden */
-.placed-item{
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  pointer-events: none; /* damit nichts blockiert */
-  user-select: none;
-}
 
-/* Drop-Bereich über der Insel (nur Inselbereich) */
-.placement-area{
-  position: absolute;
-  left: 22%;
-  top: 12%;
-  width: 56%;
-  height: 68%;
-  z-index: 5;
-
-  /* Debug: Rahmen anzeigen (nur kurz) */
-  /* outline: 2px dashed rgba(255,255,255,.25); */
-}
-
-/* Items die platziert wurden */
 .placed-item{
   position:absolute;
   width: clamp(36px, 5vw, 80px);
   height: clamp(36px, 5vw, 80px);
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);  /* <<< wichtig: left/top sind die MITTE */
   pointer-events:none;
   user-select:none;
 }
+
 
 /* Spielfeld */
 .screen{
@@ -86,7 +62,7 @@ body {
   bottom: clamp(14px, 3vw, 40px);
   left: 50%;
   transform: translateX(-50%);
-  width: min(80vw, 700px);
+  width: min(80vw, 500px);
   pointer-events: none;
 }
 
