@@ -1,16 +1,10 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db.php';   //DB-Verbindung
-
-// Hilfsfunktion zur Passwortstärke
-function is_strong_password($password) {
-    return preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/', $password);
-}
+require_once __DIR__ . '/../db.php';   // DB-Verbindung
 
 //Formularwerte holen
-$username  = trim($_POST['username'] ?? '');
-$password  = $_POST['password'] ?? '';
-$password2 = $_POST['password2'] ?? '';
+$username = trim($_POST['username'] ?? '');
+$password = $_POST['password'] ?? '';
 
 function fail_and_redirect($msg, $username = '') {
     $params = http_build_query([
@@ -21,25 +15,28 @@ function fail_and_redirect($msg, $username = '') {
     exit;
 }
 
-
-//Grundprüfung
-if ($username === '' || $password === '' || $password2 === '') {
+// Grundprüfung
+if ($username === '' || $password === '') {
     fail_and_redirect('Please complete all fields to let your journey begin', $username);
 }
 
-if ($password !== $password2) {
-    fail_and_redirect('The passwords do not match', $username);
+// Passwort-Regel: mindestens 4 Zeichen
+if (mb_strlen($password) < 4) {
+    fail_and_redirect('Your password must have at least 4 characters.', $username);
 }
 
-if (!is_strong_password($password)) {
-    fail_and_redirect('Let your light shine strong — choose a password with 8+ characters, uppercase, lowercase, a number and a special symbol.', $username);
-}
-
-//Passwort hashen
+// Passwort hashen
 $hash = password_hash($password, PASSWORD_DEFAULT);
 
 try {
-    //neuen Benutzer speichern
+    // Username schon vorab prüfen (Vermeidung Doppelanmeldung)
+    $check = $pdo->prepare("SELECT 1 FROM user WHERE name_user = :name LIMIT 1");
+    $check->execute([':name' => $username]);
+    if ($check->fetchColumn()) {
+        fail_and_redirect("This name is already in use — choose another to let your light stand out", $username);
+    }
+
+    // neuen Benutzer speichern
     $stmt = $pdo->prepare("
         INSERT INTO user (name_user, passwort_user, last_login)
         VALUES (:name, :passwort, NOW())
@@ -50,16 +47,14 @@ try {
         ':passwort' => $hash
     ]);
 
-    //Weiterleiten zum Login
+    // Weiterleiten zum Login
     header("Location: ../../html/auth/login.html");
     exit;
 
 } catch (PDOException $e) {
-    // UNIQUE-Fehler: Username bereits vergeben
+    // falls du DB-seitig UNIQUE auf name_user hast, bleibt das als Sicherheit ok:
     if ($e->getCode() === "23000") {
         fail_and_redirect("This name is already in use — choose another to let your light stand out", $username);
     }
-
-    // sonstiger Fehler
     fail_and_redirect("Database error: " . $e->getMessage(), $username);
 }
