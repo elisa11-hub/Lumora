@@ -1,3 +1,9 @@
+/* Global sizing fix (verhindert Overflows bei width:100% + padding) */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+
 /* Hintergrundbild der Startseite */
 body {
   margin: 0;
@@ -50,14 +56,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 720px;
 }
 
 .logo-image {
-  height: clamp(180px, 20vw, 240px);
+  height: auto;
   width: auto;
-
+  max-width: 320px;
   margin-bottom: 1rem;
-
+  object-fit: contain;
   opacity: 0.95;
   filter: drop-shadow(0 10px 28px rgba(0, 200, 220, 0.25));
 
@@ -165,7 +172,7 @@ body {
 }
 
 /* Mobile: Buttons untereinander */
-@media (max-width: 600px) {
+@media (max-width: 720px) {
   .button-secondary {
     flex-direction: column;
     gap: 1rem;
@@ -199,13 +206,19 @@ body {
 
 /* Panel in der Mitte wie im Screenshot */
 .login-panel {
-  margin-top: 2rem;
-  background: rgba(5, 15, 30, 0.72);
-  padding: 3rem 4rem 3.5rem;
-  border-radius: 4px;
-  max-width: 900px;
-  width: 80%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+  margin-top: 1.8rem;
+  width: min(920px, 92vw);
+
+  background: rgba(5, 15, 30, 0.70);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 18px;
+
+  padding: 3rem 3.2rem 3.2rem;
+  box-shadow:
+    0 24px 44px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(0,0,0,0.35) inset;
+
+  backdrop-filter: blur(10px);
 }
 
 /* "LogIn"-Überschrift */
@@ -214,17 +227,21 @@ body {
   margin: 0 0 2.5rem;
   font-size: 2.6rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.18em;
   color: #8fe8ff;
 }
 
 /* Formular-Layout */
 .login-form {
   width: 100%;
+  max-width: 720px;
+  margin: 0 auto 1.6rem;
 }
 
 .form-row {
-  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto 1.6rem;  
 }
 
 .form-row label {
@@ -234,47 +251,89 @@ body {
 }
 
 /* Input-Felder */
-.form-row input[type="text"],
-.form-row input[type="password"] {
+.login-form input[type="text"],
+.login-form input[type="password"] {
   width: 100%;
-  padding: 0.9rem 0.75rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 0;
   box-sizing: border-box;
+  border-radius: 12px;
+  padding: 0.95rem 1.05rem;
+
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(120, 200, 230, 0.35);
+
+  font-size: 1.05rem;
+  color: #02121e;
+}
+
+/* Fokus-Effekt */
+.login-form input:focus {
+  outline: none;
+  border-color: #23C2D3;
+  box-shadow:
+    0 0 0 3px rgba(35, 194, 211, 0.25),
+    0 8px 18px rgba(0,0,0,0.35);
 }
 
 /* Buttons unten */
 .login-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.2rem;
+  margin-top: 2.2rem;
+  min-width: 0 !important; 
+  width: 100%;
+  max-width: 720px;
+  margin: 2.2rem auto 0; /* zentriert */
+  overflow: hidden;
+
 }
 
 .btn-wide {
-  min-width: 260px;
-  text-align: center;
+  min-width: 0 !important; 
+  width: 100%;
 }
 
+/* wichtig für Grid: Items dürfen schrumpfen */
+.login-actions > a,
+.login-actions > button,
+.register-actions > a,
+.register-actions > button {
+  min-width: 0;
+  width: 100%;
+  justify-self: stretch;
+}
+
+/* <button> exakt wie <a> behandeln */
+.login-actions button.btn-lumora,
+.register-actions button.btn-lumora {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  min-width: 0;
+  overflow: hidden;
+}
 
 
 /* Mobile Anpassung */
 @media (max-width: 800px) {
   .login-panel {
-    padding: 2.5rem 1.5rem 3rem;
-    width: 90%;
+    border-radius: 20px;
+    box-shadow:
+      0 28px 48px rgba(0,0,0,0.75),
+      0 0 0 1px rgba(255,255,255,0.08) inset;
+    backdrop-filter: blur(10px);
   }
 
   .login-actions {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
+    grid-template-columns: 1fr; /* statt flex-direction */
   }
 
   .btn-wide {
-    width: 80%;
+    width: 100%;
   }
 }
+
 /* Logo auf der Login-Seite kleiner machen */
 .login-screen .logo-image {
   max-width: 160px;   /* vorher 360px */
@@ -300,13 +359,19 @@ body {
 
 /* Panel */
 .register-panel {
-  margin-top: 2rem;
+  border-radius: 18px;
+  width: min(920px, 92vw);
+  max-width: none;
+  margin-top: 1.8rem;              /* wie Login */
   background: rgba(5, 15, 30, 0.72);
-  padding: 3rem 4rem 3.5rem;
-  border-radius: 4px;
-  max-width: 900px;
-  width: 80%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+
+  padding: 3rem 3.2rem 3.2rem;     /* 🔑 exakt wie Login */
+
+  box-shadow:
+    0 24px 44px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(0,0,0,0.35) inset;
+
+  backdrop-filter: blur(10px);
 }
 
 /* Titel */
@@ -332,9 +397,14 @@ body {
 
 /* Button-Bereich */
 .register-actions {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   margin-top: 2.5rem;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 720px;     /* muss gleich sein wie deine Input-Zeilen */
+  margin: 2.2rem auto 0; /* zentriert */
+  min-width: 0 !important; 
 }
 
 .btn-register {
@@ -343,7 +413,11 @@ body {
 
 /* Logo kleiner als Startseite */
 .small-logo {
-  max-width: 160px !important;
+  height: auto !important;
+  width: min(220px, 55vw) !important;
+  max-width: 220px !important;
+  object-fit: contain;
+  aspect-ratio: auto;
 }
 
 .small-logo-text {
@@ -369,9 +443,17 @@ body {
   }
 
   .btn-wide {
-    width: 80%;
+  width: 100%;
+  min-width: 0;
   }
 }
+
+/* Logo auf Login + Register gleich klein */
+.login-screen .logo-image,
+.register-screen .logo-image {
+  max-width: 160px;
+}
+
 
 /* ===== INSEL-AUSWAHL / WELT-SEITE ===== */
 
@@ -448,6 +530,10 @@ body {
   font-weight: 800;
   letter-spacing: 0.12em;
   color: #8fe8ff;
+
+  text-shadow:
+    0 0 12px rgba(140, 240, 255, 0.25),
+    0 0 28px rgba(140, 240, 255, 0.15);
 }
 
 /* Insel-Layout */
@@ -560,133 +646,6 @@ body {
   }
 }
 
-/* ===== EMERGENCY PAGE SPEZIFISCH ===== */
-.emergency-screen {
-  padding-top: 1rem;   
-}
-
-/* Panel etwas breiter und optisch mittig */
-.emergency-panel {
-  max-width: 1100px;
-  width: 90%;
-}
-
-/* zwei Spalten nebeneinander */
-.emergency-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 2.5rem;
-  margin-top: 2rem;
-}
-
-.emergency-column {
-  min-width: 0;
-}
-
-/* farbige Hervorhebung für wichtige Hinweise */
-.emergency-highlight-warning {
-  background: rgba(255, 222, 130, 0.16); /* warmes Lumora-Gelb, sehr soft */
-  border-left: 4px solid #ffd66b;
-  padding: 0.9rem 1rem;
-  margin-bottom: 1.8rem;
-  font-size: 0.98rem;
-}
-
-.emergency-highlight-warning strong {
-  color: #ffe18e;
-}
-
-/* kleinere Info-Notizen */
-.emergency-note {
-  margin-top: 0.7rem;
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
-
-/* Links im Emergency-Text leicht hervorheben */
-.emergency-panel a {
-  color: #9ef5ff;
-  text-decoration: underline;
-}
-
-.emergency-panel a:hover {
-  text-decoration: none;
-}
-
-/* responsive: unter ~900px Spalten untereinander */
-@media (max-width: 900px) {
-  .emergency-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Sanfte Hervorhebung für Punkt 4 */
-.emergency-highlight-soft,
-.reminder-highlight-soft {
-  background: rgba(255, 222, 130, 0.12); /* sehr softes Gelb */
-  border-left: 4px solid #ffd66b;
-  padding: 1rem 1.2rem;
-  border-radius: 4px;
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.emergency-quote,
-.reminder-quote {
-  margin-top: 1.5rem;
-  font-size: 1.25rem;                /* größer */
-  font-weight: 600;                  /* betont, aber nicht fett */
-  color: #ffe9a8;                    /* warmes Lumora-Gelb */
-  text-align: center;                /* zentriert wirkt emotionaler */
-  line-height: 1.5;                  /* ruhiger Abstand */
-  text-shadow: 0 0 10px rgba(255, 220, 130, 0.35); /* sanftes Glow */
-}
-
-/* Emergency cards: ruhige optische Trennung */
-.emergency-card{
-  border-radius: 18px;
-  padding: 1.25rem 1.25rem;
-  margin-bottom: 1.1rem;
-
-  background: rgba(3, 15, 28, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow:
-    0 10px 28px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(0,0,0,0.12) inset;
-
-  backdrop-filter: blur(8px);
-}
-
-/* Überschriften etwas „aufgeräumter“ */
-.emergency-card h3{
-  margin-top: 0;
-  margin-bottom: 0.6rem;
-}
-
-/* Listen etwas luftiger, aber kompakt */
-.emergency-card ul{
-  margin: 0.6rem 0 0.8rem;
-  padding-left: 1.2rem;
-}
-
-/* Wenn du willst: leichte Akzentlinie links für 1–3 (nicht gelb) */
-.emergency-card:not(.emergency-highlight-soft){
-  position: relative;
-}
-
-.emergency-card:not(.emergency-highlight-soft)::before{
-  content: "";
-  position: absolute;
-  left: 0.9rem;
-  top: 1rem;
-  bottom: 1rem;
-  width: 3px;
-  border-radius: 99px;
-  background: rgba(64, 196, 216, 0.35); /* Lumora-türkis, dezent */
-}
-
-
-
 /* ===== LUMORA TOP BAR (Start + später andere Seiten) ===== */
 
 .topbar {
@@ -767,6 +726,7 @@ body {
   border-radius: 6px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  text-decoration: none;
 }
 
 .topbar-button:hover {
@@ -816,6 +776,8 @@ body {
   opacity: 0.9;
 }
 
+
+
 /* ===== WELCOME-SCREEN ===== */
 
 .welcome-screen {
@@ -843,6 +805,35 @@ body {
   display: grid;
   grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.4fr);
   gap: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(150, 220, 255, 0.14);
+}
+
+/* sanfter Glow oben links */
+.welcome-card::before{
+  content:"";
+  position:absolute;
+  inset:-40px;
+  background: radial-gradient(circle at 18% 18%,
+    rgba(35, 194, 211, 0.22),
+    transparent 55%);
+  pointer-events:none;
+}
+
+/* leichte „Nebel“-Deko unten rechts */
+.welcome-card::after{
+  content:"";
+  position:absolute;
+  right:-120px;
+  bottom:-140px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle,
+    rgba(255, 222, 130, 0.14),
+    transparent 65%);
+  filter: blur(2px);
+  pointer-events:none;
 }
 
 /* linke Seite */
@@ -867,7 +858,8 @@ body {
   font-size: 2.3rem;
   font-weight: 800;
   letter-spacing: 0.04em;
-  color: #e8fbff;
+  color: #ffe9a8; /* Lumora-Gelb */
+  text-shadow: 0 0 12px rgba(255, 220, 130, 0.28);
 }
 
 .welcome-subtitle {
@@ -1004,8 +996,16 @@ body {
 }
 
 .logout-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
   max-width: 820px;
   grid-template-columns: 1fr;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
 }
 
 /* ===== FLOATING EMERGENCY BUTTON (ohne Topbar) ===== */
@@ -1047,8 +1047,8 @@ body {
 }
 
 .start-logo-hero {
-   margin-top: 1.5rem;
-   margin-bottom: 2rem;
+   margin-top: 0.5rem;
+   margin-bottom: 0.5rem;
   
 }
 
@@ -1264,3 +1264,217 @@ body {
   border-radius: 999px;
 }
 
+/* ===== LUMORA STANDARD BUTTONS ===== */
+.btn-lumora {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.95rem 2.2rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  text-decoration: none;
+  min-width: 0;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-lumora:hover { transform: translateY(-2px); }
+
+.btn-lumora-primary {
+  background: #23C2D3;
+  color: #f5feff;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.55);
+}
+
+.btn-lumora-primary:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.75);
+}
+
+.btn-lumora-secondary {
+  background: rgba(200, 210, 220, 0.22);
+  border-color: rgba(255,255,255,0.12);
+  color: #eafcff;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+}
+
+.btn-lumora-secondary:hover {
+  background: rgba(200, 210, 220, 0.30);
+}
+/* ===== LUMORA BUTTON SIZES ===== */
+.btn-lumora-lg {
+  padding: 1.05rem 2.8rem;
+  font-size: 1.12rem;
+  border-radius: 14px;
+  letter-spacing: 0.12em;
+}
+
+.btn-lumora-xl {
+  padding: 1.35rem 4.4rem;
+  font-size: 1.55rem;
+  border-radius: 16px;
+  letter-spacing: 0.16em;
+}
+/* Startseite: Play oben, darunter zwei Secondary Buttons */
+.button-main {
+  margin-bottom: 2.2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.button-secondary {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+/* ===== WELCOME: Gentle Reminder im Lumora-Gelb ===== */
+.welcome-stats .reminder-highlight-soft {
+  background: rgba(255, 222, 130, 0.14);      /* gelber als vorher */
+  border: 1px solid rgba(255, 214, 107, 0.32);
+  border-left: 4px solid #ffd66b;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.55);
+}
+
+.welcome-stats .reminder-highlight-soft .stat-label {
+  color: #ffe9a8;
+}
+
+.welcome-stats .reminder-highlight-soft .reminder-quote {
+  color: #ffe9a8;
+  text-shadow: 0 0 10px rgba(255, 220, 130, 0.25);
+}
+
+/* Reminder mittig im Welcome-Card platzieren */
+/* Welcome-Card als Bezug */
+.welcome-card{
+  position: relative;
+}
+
+/* NUR den Reminder rechts mittig platzieren */
+.welcome-stats .reminder-highlight-soft{
+  position: absolute;
+  right: 40px;        /* Abstand zum Card-Rand */
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: min(420px, 34vw); /* bleibt elegant */
+}
+
+
+@media (max-width: 900px) {
+  .welcome-stats {
+    position: static;
+    transform: none;
+    margin-top: 2rem;
+  }
+}
+
+/* Register: Subtitle wie Login */
+.register-subtitle {
+  margin: -1.2rem 0 2.2rem;
+  text-align: center;
+  color: rgba(227, 249, 255, 0.85);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+/* Register: Inputs wie Login (rund + glow) */
+.register-form input[type="text"],
+.register-form input[type="password"] {
+  width: 100%;
+  max-width: 720px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  padding: 0.95rem 1.05rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(120, 200, 230, 0.35);
+
+  font-size: 1.05rem;
+  color: #02121e;
+
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.register-form input:focus {
+  outline: none;
+  border-color: #23C2D3;
+  box-shadow:
+    0 0 0 3px rgba(35, 194, 211, 0.25),
+    0 8px 18px rgba(0,0,0,0.35);
+}
+
+/* Optional: Panel minimal runder/glassy wie Pro-Login */
+.register-panel--pro {
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 28px 48px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(0,0,0,0.35) inset;
+  backdrop-filter: blur(10px);
+}
+
+/* ===== Subtle bottom-left HUD meta ===== */
+.hud-meta{
+  position: fixed;
+  left: 1.6rem;
+  bottom: 1.3rem;
+  z-index: 50;
+
+  display: flex;
+  gap: 1.4rem;
+  align-items: flex-end;
+
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+
+  background: rgba(0, 10, 25, 0.20);
+  border: 1px solid rgba(150, 220, 255, 0.10);
+  backdrop-filter: blur(6px);
+
+  color: rgba(230, 250, 255, 0.85);
+}
+
+.hud-item{
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.hud-label{
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(155, 205, 233, 0.75);
+}
+
+.hud-value{
+  font-size: 0.85rem;
+  color: rgba(244, 251, 255, 0.92);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* auf kleinen screens lieber untereinander */
+@media (max-width: 720px){
+  .hud-meta{
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    gap: 0.8rem;
+    justify-content: space-between;
+  }
+  .hud-value{
+    font-size: 0.8rem;
+  }
+}

@@ -76,7 +76,7 @@ try {
   <!-- TOPBAR -->
   <header class="topbar">
     <div class="topbar-left">
-      <a href="/Lumora/html/emergency.html" class="btn topbar-emergency" onclick="window.open(this.href, 'emergency', 'width=480,height=700'); return false;">Emergency</a>
+      <a href="/Lumora/html/emergency.html" class="btn topbar-emergency" onclick="window.open(this.href, 'emergency', 'width=1400,height=900'); return false;">Emergency</a>
     </div>
 
     <div class="topbar-center">
@@ -87,7 +87,10 @@ try {
       <span class="topbar-username">
         Hi,&nbsp;<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>
       </span>
-      <a href="../php/auth/logout.php" class="btn topbar-button">Logout</a>
+<a href="../php/auth/logout.php" class="topbar-button">
+  Logout
+</a>
+
     </div>
   </header>
 
@@ -98,36 +101,21 @@ try {
       <div class="welcome-main">
         <p class="welcome-tagline">Welcome back to Lumora</p>
         <h1 class="welcome-title">
-          Good to see you, <?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>.
+          Good to see you, <?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>
         </h1>
 
         <p class="welcome-subtitle">
-          Your journey through the islands continues. Take a breath, arrive here for a moment,
+          Your journey through the islands continues. <br> Take a breath, arrive here for a moment,<br>
           and then follow your inner light at your own pace.
         </p>
 
-        <div class="welcome-meta">
-          <?php if ($lastLogin !== null): ?>
-            <div class="meta-item">
-              <span class="meta-label">Last login</span>
-              <span class="meta-value">
-                <?php echo htmlspecialchars($lastLogin, ENT_QUOTES, 'UTF-8'); ?>
-              </span>
-            </div>
-          <?php endif; ?>
-
-          <div class="meta-item">
-            <span class="meta-label">Current world</span>
-            <span class="meta-value">Islands of inner strength</span>
-          </div>
-        </div>
 
         <div class="welcome-actions">
-          <a href="../php/world.php" class="btn btn-primary welcome-play-btn">
-            Continue your journey
+          <a href="../php/world.php" class="btn-lumora btn-lumora-primary btn-lumora-lg welcome-play-btn">
+          Continue your journey
           </a>
         </div>
-      </div>
+
 
       <!-- rechte Seite: Stats / Lightpoints -->
       <aside class="welcome-stats">
@@ -144,12 +132,34 @@ try {
         <div class="stat-box reminder-highlight-soft">
           <div class="stat-label">Today’s gentle reminder</div>
           <p class="reminder-quote">
-            You don’t have to be perfect to keep going.
+            You don’t have to be perfect to keep going. <br>
             Showing up is already an act of courage.
           </p>
         </div>
       </aside>
     </section>
+
+    <div class="hud-meta">
+  <?php if ($lastLogin !== null): ?>
+    <div class="hud-item">
+      <span class="hud-label">Last login</span>
+      <span class="hud-value"><?php echo htmlspecialchars($lastLogin, ENT_QUOTES, 'UTF-8'); ?></span>
+    </div>
+  <?php endif; ?>
+
+  <div class="hud-item">
+    <span class="hud-label">Current world</span>
+    <span class="hud-value">Islands of Selflove</span>
+  </div>
+
+  <div class="hud-item">
+    <span class="hud-label">Lightpoints</span>
+    <span class="hud-value">
+      <?php echo $lightpoints !== null ? htmlspecialchars($lightpoints, ENT_QUOTES, 'UTF-8') : 'N/A'; ?>
+    </span>
+  </div>
+</div>
+
   </main>
 </body>
 </html>

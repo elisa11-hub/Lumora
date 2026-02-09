@@ -9,7 +9,7 @@
   <div class="overlay"></div>
 
   <!-- Emergency: immer sichtbar, dezent oben links -->
- <a href="/Lumora/html/emergency.html" class="btn topbar-emergency emergency-floating" onclick="window.open(this.href, 'emergency', 'width=480,height=700'); return false;">Emergency</a>
+ <a href="/Lumora/html/emergency.html" class="btn topbar-emergency emergency-floating" onclick="window.open(this.href, 'emergency', 'width=1400,height=900'); return false;">Emergency</a>
 
 
   <main class="login-screen">
@@ -21,6 +21,11 @@
     <!-- Login-Panel -->
     <section class="login-panel">
       <h2 class="login-title">LogIn</h2>
+
+      <p class="register-subtitle">
+        Welcome to Lumora — one step at a time.
+      </p>
+
 
       <form class="login-form" action="../../php/auth/login.php" method="post">
         <div class="form-row">
@@ -35,9 +40,8 @@
 
         <div class="login-actions">
           <!-- Zur Startseite zurück -->
-          <a href="../start.html" class="btn btn-cancellogin btn-wide">Cancel</a>
-          
-          <button type="submit" class="btn btn-primary btn-wide">Login</button>
+          <a href="../start.html" class="btn-lumora btn-lumora-secondary btn-wide">Cancel</a>
+          <button type="submit" class="btn-lumora btn-lumora-primary btn-wide">Login</button>
         </div>
       </form>
     </section>

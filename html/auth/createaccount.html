@@ -8,73 +8,76 @@
 <body>
   <div class="overlay"></div>
 
+  <!-- Emergency: immer sichtbar, dezent oben links -->
+  <a href="/Lumora/html/emergency.html"
+     class="btn topbar-emergency emergency-floating"
+     onclick="window.open(this.href, 'emergency', 'width=1400,height=900'); return false;">
+    Emergency
+  </a>
+
   <main class="register-screen">
-
-    <a href="/Lumora/html/emergency.html" class="btn topbar-emergency emergency-floating" onclick="window.open(this.href, 'emergency', 'width=480,height=700'); return false;">Emergency</a>
-
-    <!-- Logo -->
+    <!-- Logo oben -->
     <header class="logo-wrapper">
-      <img src="../../images/lumora-logo.png" alt="Lumora Logo" class="logo-image small-logo">
+      <img src="../../images/lumora-logo.png" alt="Lumora Logo" class="logo-image">
     </header>
 
     <!-- Panel -->
-    <section class="register-panel">
+    <section class="register-panel register-panel--pro">
       <h2 class="register-title">Create an account</h2>
+      <p class="register-subtitle">
+        Welcome to Lumora — one step at a time.
+      </p>
 
+      <!-- Error Box (wird via JS gezeigt) -->
+      <div id="errorBox" class="error-box" style="display: none;"></div>
 
       <form class="register-form" action="../../php/auth/createaccount.php" method="post">
-
         <div class="form-row">
           <label for="username">Username:</label>
           <input type="text" id="username" name="username" required>
         </div>
 
-        <div class="form-row two-cols">
-          <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required minlength="4">
-          </div>
-
-        <div id="errorBox" class="error-box" style="display: none;"></div>
+        <div class="form-row">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required minlength="4">
+        </div>
 
         <div class="register-actions">
-          <a href="../start.html" class="btn btn-cancelregister btn-wide">Cancel</a>
-
-          <button type="submit" class="btn btn-primary btn-wide">Create Account</button>
+          <a href="../start.html" class="btn-lumora btn-lumora-secondary btn-wide">Cancel</a>
+          <button type="submit" class="btn-lumora btn-lumora-primary btn-wide">Create Account</button>
         </div>
       </form>
     </section>
   </main>
-  
+
   <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const params   = new URLSearchParams(window.location.search);
-  const error    = params.get('error');
-  const username = params.get('username');
+    document.addEventListener('DOMContentLoaded', function () {
+      const params   = new URLSearchParams(window.location.search);
+      const error    = params.get('error');
+      const username = params.get('username');
 
-  // Fehlermeldung anzeigen
-  if (error) {
-    const box = document.getElementById('errorBox');
-    if (box) {
-      box.textContent = error;
-      box.style.display = 'block';
-    }
-  }
+      // Fehlermeldung anzeigen
+      if (error) {
+        const box = document.getElementById('errorBox');
+        if (box) {
+          box.textContent = error;
+          box.style.display = 'block';
+        }
+      }
 
-  // Username wieder einsetzen
-  if (username) {
-    const userInput = document.getElementById('username');
-    if (userInput) {
-      userInput.value = username;
-    }
-  }
+      // Username wieder einsetzen
+      if (username) {
+        const userInput = document.getElementById('username');
+        if (userInput) {
+          userInput.value = username;
+        }
+      }
 
-  // Optional: Query-Parameter aus der URL entfernen, nachdem sie verarbeitet wurden
-  if (error || username) {
-    window.history.replaceState({}, document.title, window.location.pathname);
-  }
-});
-</script>
-
+      // Query-Parameter aus der URL entfernen
+      if (error || username) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    });
+  </script>
 </body>
 </html>

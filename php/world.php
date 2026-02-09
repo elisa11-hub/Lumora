@@ -111,7 +111,7 @@ $insStmt = $pdo->prepare("
 
     <!-- Emergency Button -->
     <div class="topbar-left">
-        <a href="/Lumora/html/emergency.html" class="btn topbar-emergency" onclick="window.open(this.href, 'emergency', 'width=480,height=700'); return false;">Emergency</a>
+        <a href="/Lumora/html/emergency.html" class="btn topbar-emergency" onclick="window.open(this.href, 'emergency', 'width=1400,height=900'); return false;">Emergency</a>
     </div>
 
     <!-- Logo -->
@@ -122,14 +122,7 @@ $insStmt = $pdo->prepare("
     <!-- Username, Lightpoints, Logout -->
     <div class="topbar-right">
 
-        <span class="topbar-username">Hi, <?php echo htmlspecialchars($username); ?></span>
-
-        <div class="topbar-lightpoints">
-            <span class="topbar-lightpoints-label">Lightpoints</span>
-            <span class="topbar-lightpoints-value"><?php echo $lightpoints; ?></span>
-        </div>
-
-        
+        <span class="topbar-username">Hi, <?php echo htmlspecialchars($username); ?></span>     
         <a href="auth/logout.php" class="btn topbar-button">Logout</a>
     </div>
 </header>
@@ -141,8 +134,8 @@ $insStmt = $pdo->prepare("
 
     <!-- Title Area -->
     <section class="world-header">
-      <h1 class="world-title">Choose your next island</h1>
-      <p class="world-subline">Every island holds a part of your inner light.</p>
+      <h1 class="world-title">Let your next island awaken</h1>
+      <p class="world-subline">Each island awakens as your light grows</p>
     </section>
 
     <!-- Island Grid -->

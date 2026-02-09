@@ -1,0 +1,213 @@
+/* ===== EMERGENCY PAGE SPEZIFISCH ===== */
+.emergency-screen {
+  min-height: 100svh;
+  padding: 2rem 2rem 3rem;
+  box-sizing: border-box;  
+}
+
+/* Panel etwas breiter und optisch mittig */
+.emergency-panel {
+  width: min(1200px, 92vw);
+  max-width: 1200px;
+  margin: 1.5rem auto 0;
+  padding: 3.2rem 3.2rem 3rem;
+  max-height: 78svh;
+  overflow: auto;
+}
+
+/* zwei Spalten nebeneinander */
+.emergency-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.emergency-column {
+  min-width: 0;
+}
+
+/* farbige Hervorhebung für wichtige Hinweise */
+.emergency-highlight-warning {
+  background: rgba(255, 222, 130, 0.16); /* warmes Lumora-Gelb, sehr soft */
+  border-left: 4px solid #ffd66b;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.8rem;
+  font-size: 0.98rem;
+}
+
+.emergency-highlight-warning strong {
+  color: #ffe18e;
+}
+
+/* kleinere Info-Notizen */
+.emergency-note {
+  margin-top: 0.7rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Links im Emergency-Text leicht hervorheben */
+.emergency-panel a {
+  color: #9ef5ff;
+  text-decoration: underline;
+}
+
+.emergency-panel a:hover {
+  text-decoration: none;
+}
+
+/* responsive: unter ~900px Spalten untereinander */
+@media (max-width: 900px) {
+  .emergency-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sanfte Hervorhebung für Punkt 4 */
+.emergency-highlight-soft,
+.reminder-highlight-soft {
+  background: rgba(255, 222, 130, 0.12); /* sehr softes Gelb */
+  border-left: 4px solid #ffd66b;
+  padding: 1rem 1.2rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.emergency-quote,
+.reminder-quote {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;                /* größer */
+  font-weight: 600;                  /* betont, aber nicht fett */
+  color: #ffe9a8;                    /* warmes Lumora-Gelb */
+  text-align: center;                /* zentriert wirkt emotionaler */
+  line-height: 1.5;                  /* ruhiger Abstand */
+  text-shadow: 0 0 10px rgba(255, 220, 130, 0.35); /* sanftes Glow */
+}
+
+/* Emergency cards: Trennung */
+.emergency-card ul li strong{
+  color: #ffe9a8; /* Lumora-Gelb (warm) */
+  background: rgba(255, 222, 130, 0.14);
+  border: 1px solid rgba(255, 214, 107, 0.45);
+
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  display: inline-block;
+  margin-right: 0.45rem;
+
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 10px rgba(255, 220, 130, 0.22);
+}
+
+/* Überschriften */
+.emergency-card h3{
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+}
+
+/* Listen etwas luftiger, aber kompakt */
+.emergency-card ul{
+  margin: 0.6rem 0 0.8rem;
+  padding-left: 1.2rem;
+}
+
+/* leichte Akzentlinie links für 1–3 */
+.emergency-card:not(.emergency-highlight-soft){
+  position: relative;
+}
+
+.emergency-card:not(.emergency-highlight-soft)::before{
+  content: "";
+  position: absolute;
+  left: 0.9rem;
+  top: 1rem;
+  bottom: 1rem;
+  width: 3px;
+  border-radius: 99px;
+  background: rgba(64, 196, 216, 0.35); 
+  content: none !important;
+  display: none !important;
+}
+
+.emergency-page .emergency-panel {
+  max-width: 1200px;
+  width: min(1200px, 92vw);
+  padding: 3.2rem 3.2rem 3rem;
+}
+.emergency-page .emergency-panel .emergency-title {
+  font-size: 2.4rem;
+  font-weight: 500;
+  margin-bottom: 1.6rem;
+}
+
+/* ===== FORCE BIG EMERGENCY WINDOW ===== */
+.emergency-screen .register-panel.emergency-panel {
+  width: min(1200px, 92vw) !important;
+  max-width: 1200px !important;
+
+  margin: 2rem auto 0;
+  padding: 3.2rem 3.2rem 3rem;
+
+  /* ganz wichtig: KEIN inneres Scroll */
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.emergency-screen {
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+}
+
+/* ===== FINAL OVERRIDES (ganz ans Ende!) ===== */
+
+/* großes Panel wie im Screenshot (und KEIN inneres Scroll) */
+.emergency-page .register-panel.emergency-panel {
+  width: min(1200px, 92vw) !important;
+  max-width: 1200px !important;
+
+  margin: 1.5rem auto 0 !important;
+  padding: 3.2rem 3.2rem 3rem !important;
+
+  /* wichtig: Seite scrollt normal */
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Screen-Abstände wie Hero-Layout */
+.emergency-page .register-screen.emergency-screen {
+  padding-top: 2.5rem !important;
+  padding-bottom: 4rem !important;
+}
+
+/* LOGO: niemals verzerren (Emergency-spezifisch) */
+.emergency-page .logo-image.small-logo {
+  height: auto !important;
+  width: min(220px, 55vw) !important;
+  max-width: 220px !important;
+  object-fit: contain !important;
+  aspect-ratio: auto !important;
+}
+
+/* Nummern-Badges in Lumora-Gelb */
+.emergency-page .emergency-card ul li strong {
+  color: #ffe9a8;
+  background: rgba(255, 222, 130, 0.16);
+  border: 1px solid rgba(255, 214, 107, 0.55);
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  display: inline-block;
+  margin-right: 0.45rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 10px rgba(255, 220, 130, 0.22);
+}
+
+/* Balken links sicher entfernen */
+.emergency-page .emergency-card::before {
+  content: none !important;
+  display: none !important;
+}
+
