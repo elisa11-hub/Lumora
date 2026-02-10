@@ -1,0 +1,86 @@
+    body{
+      margin: 0;
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: radial-gradient(circle at top,
+        rgba(40, 160, 200, 0.25),
+        rgba(5, 15, 30, 0.95));
+
+      color: #eafcff;
+      font-family: "Trebuchet MS", system-ui, sans-serif;
+    }
+
+    .howto-card{
+      width: min(92vw, 520px);
+      padding: 32px 34px 36px;
+
+      background: rgba(15, 35, 60, 0.85);
+      border-radius: 20px;
+      border: 1px solid rgba(150, 220, 255, 0.18);
+
+      box-shadow:
+        0 32px 60px rgba(0,0,0,0.75),
+        0 0 0 1px rgba(0,0,0,0.35) inset;
+    }
+
+    .howto-title{
+      margin: 0 0 10px;
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #FFE2A3; /* Lumora Gold */
+    }
+
+    .howto-intro{
+      margin: 0 0 22px;
+      font-size: 0.95rem;
+      color: #cfe8f5;
+      opacity: 0.95;
+    }
+
+    .howto-steps{
+      margin: 0 0 22px;
+      padding-left: 1.2rem;
+    }
+
+    .howto-steps li{
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .howto-steps strong{
+      display: block;
+      font-weight: 700;
+      color: #9fe8ff;
+      margin-bottom: 2px;
+    }
+
+    .howto-note{
+      margin: 0 0 26px;
+      font-size: 0.85rem;
+      color: #c7ddf0;
+      opacity: 0.9;
+    }
+
+    .howto-actions{
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (max-width: 520px){
+      .howto-card{
+        padding: 26px 22px 30px;
+        border-radius: 16px;
+      }
+    }
+
+    .howto-floating{
+  position: fixed;
+  top: 1.2rem;
+  right: 1.6rem;
+  z-index: 1000;
+}
