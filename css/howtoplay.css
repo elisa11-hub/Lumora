@@ -5,10 +5,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
+        background:
+      radial-gradient(
+      circle at top,
+      rgba(110, 200, 210, 0.18),   /* sanftes Lumora-Türkis */
+      rgba(12, 32, 55, 0.92) 60%,
+      rgba(5, 12, 25, 1) 100%
+        );
 
-      background: radial-gradient(circle at top,
-        rgba(42, 183, 231, 0.25),
-        rgba(5, 15, 30, 0.95));
 
       color: #eafcff;
       font-family: "Trebuchet MS", system-ui, sans-serif;
@@ -93,4 +97,13 @@
   font-size: 0.9rem;        /* kleiner Text */
   letter-spacing: 0.08em;   /* etwas weniger spacing */
   border-radius: 12px;      /* etwas kompakter */
+}
+
+.howto-logo {
+  display: block;
+  height: 64px;
+  margin: 0 auto 14px;
+
+  opacity: 0.85;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45));
 }
