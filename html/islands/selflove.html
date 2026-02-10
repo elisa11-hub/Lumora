@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>Island of Self-Love</title>
-  <link rel="stylesheet" href="../../css/style_island_selflove.css" />
+  <link rel="stylesheet" href="../../css/styles.css" />
+<link rel="stylesheet" href="../../css/style_island_selflove.css" />
+
 
 </head>
-<body>
+<body data-island="Selflove">
   <div class="overlay"></div>
 <!-- TOPBAR -->
    <header class="topbar">
@@ -28,27 +30,18 @@
   </div>
 
 </header>
-    <div class="world">
-
-    <!-- Titel (kann auch als Bild sein) -->
-    <img src="../../images/insel1_schrift.png" alt="Island of Self-Love" class="title-text">
-
-    </div>
-   
   <div class="screen">
-
-
     <!-- Linke Item-Box -->
     <div class="items-panel">
       <div class="items-header">Items:</div>
       <div class="item-row">
-        <img src="../../images/item-house-selflove.png" draggable="true" data-item-id="1" alt="House" class="item-img">
+        <img src="../../images/parfume_pink.png" draggable="true" data-item-id="1" alt="House" class="item-img">
         <span class="item-count">1</span>
         <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
 
       <div class="item-row">
-        <img src="../../images/item-tree-selflove.png" draggable="true" data-item-id="2" alt="Tree" class="item-img">
+        <img src="../../images/portal_pink.png" draggable="true" data-item-id="2" alt="Tree" class="item-img">
         <span class="item-count">1</span>
         <img src="../../images/lightpoint-icon.png" alt="Sun Icon" class="item-sun">
       </div>
@@ -72,16 +65,27 @@
       </div>
     </div>
 
-    <!-- Back -->
-    <a href="../../php/world.php" class="btn-back">Back</a>
-
     <!-- Rechte Task-Box -->
     <div class="tasks-panel">
       <div class="tasks-header">Leftover Tasks: <span>3</span></div>
-      <button class="btn-start" onclick="startTask()">Start task</button>
+      <button class="btn-lumora btn-lumora-primary btn-lumora-lg island-start" onclick="startTask()">Start task</button>
      </div>
 
      <div id="placementArea" class="placement-area"></div>
+
+<!-- Back -->
+    <a href="../../php/world.php" class="btn topbar-button btn-back">Back</a>
+
+<img 
+  src="../../images/insel1_schrift.png" 
+  alt="Island of Self-Love"
+  class="island-label"
+/>
+
+
+
+</body>
+</html>
 
      <script>
 (() => {
