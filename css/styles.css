@@ -1582,3 +1582,11 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+ .howto-floating{
+  position: fixed;
+  top: 1.2rem;
+  right: 1.6rem;
+  z-index: 1000;
+}
+
