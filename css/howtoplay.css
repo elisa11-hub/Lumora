@@ -5,14 +5,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-        background:
-      radial-gradient(
-      circle at top,
-      rgba(110, 200, 210, 0.18),   /* sanftes Lumora-Türkis */
-      rgba(12, 32, 55, 0.92) 60%,
-      rgba(5, 12, 25, 1) 100%
-        );
-
 
       color: #eafcff;
       font-family: "Trebuchet MS", system-ui, sans-serif;
