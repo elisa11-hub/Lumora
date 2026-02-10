@@ -1478,3 +1478,107 @@ body {
     font-size: 0.8rem;
   }
 }
+
+/* ===== HOW TO PLAY OVERLAY ===== */
+
+.howto-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 10, 25, 0.65);
+  backdrop-filter: blur(6px);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.howto-overlay.is-open{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Card */
+.howto-card{
+  width: min(92vw, 520px);
+  padding: 28px 30px 30px;
+
+  background: rgba(15, 35, 60, 0.85);
+  border-radius: 18px;
+  border: 1px solid rgba(150, 220, 255, 0.18);
+
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(0,0,0,0.35) inset;
+
+  color: #eafcff;
+  text-align: left;
+}
+
+/* Title */
+.howto-title{
+  margin: 0 0 8px;
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #FFE9A8; /* Lumora soft gold */
+}
+
+/* Intro */
+.howto-intro{
+  margin: 0 0 18px;
+  font-size: 0.95rem;
+  color: #cfe8f5;
+  opacity: 0.95;
+}
+
+/* Steps */
+.howto-steps{
+  margin: 0 0 18px;
+  padding-left: 1.2rem;
+}
+
+.howto-steps li{
+  margin-bottom: 12px;
+  line-height: 1.45;
+  font-size: 0.92rem;
+  color: #e3f9ff;
+}
+
+.howto-steps strong{
+  display: block;
+  font-weight: 700;
+  color: #9fe8ff;
+}
+
+/* Note */
+.howto-note{
+  margin: 0 0 22px;
+  font-size: 0.85rem;
+  color: #c7ddf0;
+  opacity: 0.9;
+}
+
+/* Actions */
+.howto-actions{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Mobile */
+@media (max-width: 520px){
+  .howto-card{
+    padding: 22px 20px 24px;
+    border-radius: 14px;
+  }
+
+  .howto-actions{
+    grid-template-columns: 1fr;
+  }
+}
