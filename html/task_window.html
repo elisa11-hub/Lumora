@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <title>Task</title>
   <style>
-    body{margin:0;font-family:system-ui,Arial;background:#071f26;color:#fff;height:100vh;display:flex;align-items:center;justify-content:center}
+    body{margin:0;font-family:system-ui,Arial;background:#061427;color:#fff;height:100vh;display:flex;align-items:center;justify-content:center}
     .wrap{width:920px;max-width:92vw;min-height:520px;border-radius:18px;overflow:hidden;position:relative;
-      background: radial-gradient(1200px 600px at 50% 10%, rgba(0,255,255,.15), transparent),
+      background: radial-gradient(1200px 600px at 50% 10%, rgba(0,140,255,.25), transparent),
                   linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       box-shadow:0 20px 60px rgba(0,0,0,.45);
       border:1px solid rgba(255,255,255,.10);
@@ -20,7 +20,7 @@
     .timerBox{display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center}
     .ring{width:180px;height:180px;border-radius:50%;display:grid;place-items:center;position:relative}
     .ring::before{content:"";position:absolute;inset:0;border-radius:50%;
-      background:conic-gradient(rgba(0,255,255,.95) var(--p,0%), rgba(255,255,255,.10) 0);
+      background:conic-gradient(rgba(0,140,255,.95) var(--p,0%), rgba(255,255,255,.10) 0);
       -webkit-mask:radial-gradient(circle, transparent 62%, #000 63%);
               mask:radial-gradient(circle, transparent 62%, #000 63%);
     }
@@ -81,10 +81,12 @@
         <div class="ring" id="ring" style="--p:0%">
           <div style="text-align:center">
             <div class="time" id="time">00:00</div>
-            <div class="sub" id="sub">Timer läuft…</div>
+            <div class="sub" id="sub">Timer is running…</div>
           </div>
         </div>
       </div>
+
+      
     </div>
   </div>
 
@@ -121,36 +123,41 @@ function applyDesign(variant){
   if (variant === "stopwatch") {
     wrap.classList.add("theme-stopwatch");
     iconEl.textContent = "⏱️";
-    hintEl.textContent = "Tipp: Stell dir einen ruhigen Rhythmus vor – Hauptsache du bleibst in Bewegung.";
+    hintEl.textContent = "";
+    
   } else if (variant === "motion") {
     wrap.classList.add("theme-motion");
     iconEl.textContent = "🌀";
-    hintEl.textContent = "Langsam & kontrolliert – keine Schmerzen erzwingen.";
+    hintEl.textContent = "";
     stepsEl.style.display = "block";
     stepsEl.innerHTML = `
-      <li>30s Schulterkreisen nach hinten</li>
-      <li>30s Schulterkreisen nach vorne</li>
+      <li>30s shoulder rolls backward</li>
+      <li>30s shoulder rolls forward</li>
     `;
+    
   } else if (variant === "breath") {
     wrap.classList.add("theme-breath");
     iconEl.textContent = "🌬️";
-    hintEl.textContent = "Box Breathing: 4 ein – 4 halten – 4 aus – 4 halten.";
+    hintEl.textContent = "";
+    
   } else if (variant === "calm") {
     wrap.classList.add("theme-calm");
     iconEl.textContent = "🫧";
-    hintEl.textContent = "Nur wahrnehmen, nicht bewerten. Wenn Gedanken kommen: freundlich zurück.";
+    hintEl.textContent = "";
     stepsEl.style.display = "block";
     stepsEl.innerHTML = `
-      <li>Stirn & Kiefer entspannen</li>
-      <li>Schultern sinken lassen</li>
-      <li>Bauch ruhig werden lassen</li>
-      <li>Beine/ Füße spüren</li>
+      <li>Relax your forehead & jaw</li>
+      <li>Let your shoulders drop</li>
+      <li>Let your belly soften</li>
+      <li>Notice your legs and feet</li>
     `;
+    
   } else {
     wrap.classList.add("theme-stopwatch");
     iconEl.textContent = "✨";
   }
 }
+
 
 function startTimer(seconds){
   total = seconds;
@@ -170,7 +177,7 @@ function startTimer(seconds){
     if (left === 0) {
       clearInterval(timer);
       timer = null;
-      subEl.textContent = "Fertig! Du kannst jetzt auf Done klicken.";
+      subEl.textContent = "Done! You can now klick on DONE.";
       doneBtn.disabled = false;
     }
   }, 1000);
@@ -205,15 +212,15 @@ async function doneTask() {
 }
 
 if (!task) {
-  titleEl.textContent = "Kein Task gefunden";
-  descEl.textContent = "Bitte starte den Task erneut.";
+  titleEl.textContent = "No Task found";
+  descEl.textContent = "Please start the task again.";
   subEl.textContent = "";
 } else {
   badge.textContent = (task.category || "TASK").toUpperCase();
   titleEl.textContent = task.title || "Task";
   descEl.textContent = task.description || "";
   if (typeof task.remaining_today !== "undefined") {
-    remain.textContent = `Übrig heute: ${task.remaining_today}`;
+    remain.textContent = `Leftover Tasks: ${task.remaining_today}`;
   }
 
   applyDesign(task.design_variant || "default");
