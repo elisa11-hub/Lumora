@@ -78,17 +78,18 @@ body {
 }
 
 .items-panel{
-  position: absolute;
+ position: absolute;
   left: clamp(10px, 1.5vw, 20px);
   bottom: clamp(60px, 8vw, 80px);
 
-  width: clamp(170px, 20vw, 260px);
-  height: auto;
+  /* 20% schmaler als vorher (max 260 -> ~210, vw 20 -> 16) */
+  width: clamp(150px, 16vw, 210px);
 
-  padding: clamp(10px, 1.8vw, 20px);
+  padding: 18px 16px;              /* links/rechts gleich */
   background: rgba(20, 40, 60, 0.7);
   border-radius: 8px;
   color: #f5feff;
+  box-sizing: border-box;
 }
 
 .items-header{
@@ -123,19 +124,30 @@ body {
 /* Back-Button */
 .btn-back{
   position: absolute;
-  left: clamp(10px, 2vw, 30px);
+  left: clamp(10px, 1.5vw, 20px);
   bottom: clamp(10px, 2vw, 25px);
 
-  padding: clamp(8px, 1.2vw, 10px) clamp(16px, 2.8vw, 35px);
-  border: none;
-  background: rgba(180, 200, 200, 0.9);
-  font-size: clamp(12px, 1.3vw, 18px);
-  cursor: pointer;
+  /* gleiche Breite wie Panel */
+  width: clamp(150px, 16vw, 210px);
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.12);
+  color: rgba(245,254,255,0.95);
+
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+
+  box-shadow: 0 12px 24px rgba(0,0,0,0.35);
   text-decoration: none;
-  color: #1a2a33;
-  border-radius: 6px;
 }
 
 .btn-back:hover {
@@ -313,4 +325,26 @@ body {
     left: 10px;
     bottom: calc(10px + 46vw); /* falls du Platz brauchst – optional */
   }
+}
+/* ===== TRUST: Panel + Back exakt untereinander (zentriert) ===== */
+body[data-island="Trust"] .items-panel{
+  position: fixed !important;
+  left: 130px !important;
+  transform: translateX(-50%) !important;
+
+  width: 210px !important;        /* Breite Panel */
+  bottom: 84px !important;        /* Abstand über Back */
+}
+
+body[data-island="Trust"] .btn-back{
+  position: fixed !important;
+  left: 130px !important;
+  transform: translateX(-50%) !important;
+
+  width: 210px !important;        /* exakt gleiche Breite */
+  height: 44px !important;
+  bottom: 20px !important;
+
+  display: grid !important;
+  place-items: center !important;
 }
