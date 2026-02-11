@@ -184,7 +184,7 @@ foreach ($islands as $island) {
     aria-disabled="<?= $ariaDisabled ?>"
     tabindex="<?= $tabIndex ?>"
     data-unlock-cost="<?= (int)$cost ?>"
-    data-island="<?= htmlspecialchars($slug) ?>"
+    data-island="<?= htmlspecialchars(ucfirst($slug)) ?>"
   >
     <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($name) ?>" class="island-image">
 
