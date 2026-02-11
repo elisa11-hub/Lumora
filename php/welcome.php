@@ -119,16 +119,6 @@ try {
 
       <!-- rechte Seite: Stats / Lightpoints -->
       <aside class="welcome-stats">
-        <?php if ($lightpoints !== null): ?>
-          <div class="stat-box big">
-            <div class="stat-label">Light points</div>
-            <div class="stat-value"><?php echo $lightpoints; ?></div>
-            <p class="stat-hint">
-              Each point is a moment you took for yourself.
-            </p>
-          </div>
-        <?php endif; ?>
-
         <div class="stat-box reminder-highlight-soft">
           <div class="stat-label">Today’s gentle reminder</div>
           <p class="reminder-quote">
