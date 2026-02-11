@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Island of Self-Embrace</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
   <link rel="stylesheet" href="../../css/styles_trust.css" />
-
+  
 </head>
 <body data-island="Trust">
   <div class="overlay"></div>
@@ -14,7 +15,7 @@
   <div class="topbar-left">
     <a href="/Lumora/html/emergency.html"
        class="btn topbar-emergency"
-       onclick="window.open(this.href,'emergency','width=480,height=700'); return false;">
+       onclick="window.open(this.href,'emergency','width=1400,height=900'); return false;">
       Emergency
     </a>
   </div>
@@ -28,16 +29,7 @@
   </div>
 
 </header>
-    <div class="world">
-
-    <!-- Titel (kann auch als Bild sein) -->
-    <img src="../../images/island-trust_schrift.png" alt="Island of Self-Embrace" class="title-text">
-
-    </div>
-   
   <div class="screen">
-
-
     <!-- Linke Item-Box -->
     <div class="items-panel">
       <div class="items-header">Items:</div>
@@ -72,17 +64,26 @@
       </div>
     </div>
 
-    <!-- Back -->
-    <a href="../../php/world.php" class="btn-back">Back</a>
-
     <!-- Rechte Task-Box -->
     <div class="tasks-panel">
-      <button class="btn-start" onclick="startTask()">Start task</button>
+      <button class="btn-lumora btn-lumora-primary btn-lumora-lg island-start" onclick="startTask()">Start task</button>
      </div>
 
     <div id="placementArea" class="placement-area"></div>
+  </div>
+    <!-- Back -->
+    <a href="../../php/world.php" class="btn btn-back">Back</a>
+
+<img 
+  src="../../images/island-trust_schrift.png" 
+  alt="Island of Trust"
+  class="island-label"
+/>
 
     <script type="module" src="/Lumora/js/audioBootstrap.js"></script>
+
+    </body>
+</html>
 
      <script>
 (() => {
