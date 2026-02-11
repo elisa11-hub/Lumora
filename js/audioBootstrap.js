@@ -19,7 +19,10 @@ function ensureSoundButton() {
   btn.style.bottom = "20px";
   btn.style.right = "20px";
   btn.style.zIndex = "9999";
-  btn.className = "btn"; // ODER eigene CSS-Klasse
+  btn.style.fontWeight = "normal";
+  btn.style.backgroundColor = "rgba(60, 190, 198, 0.25)";
+  btn.style.color = "#f9fafa";
+  btn.className = "btn btn-lumora"; // ODER eigene CSS-Klasse
   document.body.appendChild(btn);
   return btn;
 }
