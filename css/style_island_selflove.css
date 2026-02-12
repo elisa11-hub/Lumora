@@ -39,29 +39,6 @@ body {
   user-select:none;
 }
 
-/* Drop-Bereich über der Insel (nur Inselbereich) */
-.placement-area{
-  position: absolute;
-  left: 22%;
-  top: 12%;
-  width: 56%;
-  height: 68%;
-  z-index: 5;
-
-  /* Debug: Rahmen anzeigen (nur kurz) */
-  /* outline: 2px dashed rgba(255,255,255,.25); */
-}
-
-/* Items die platziert wurden */
-.placed-item{
-  position: absolute;
-  width: clamp(40px, 5vw, 80px);
-  height: clamp(40px, 5vw, 80px);
-  pointer-events: none;
-  user-select: none;
-}
-
-
 /* Spielfeld */
 .screen{
   position: relative;
@@ -102,16 +79,18 @@ body {
 }
 
 .items-panel{
-  position: fixed;
-  left: 20px;      /* gleiche Kante wie Back */
-  top: 50%;
-  transform: translateY(-50%);
+  position: absolute;
+  left: clamp(10px, 1.5vw, 20px);
+  bottom: clamp(60px, 8vw, 80px);
 
-  width: 170px;    /* schmaler */
-  padding: 14px;   /* kompakter */
-  background: rgba(15, 35, 60, 0.75);
-  border-radius: 4px;
+  /* 20% schmaler als vorher (max 260 -> ~210, vw 20 -> 16) */
+  width: clamp(150px, 16vw, 210px);
+
+  padding: 18px 16px;              /* links/rechts gleich */
+  background: rgba(20, 40, 60, 0.7);
+  border-radius: 8px;
   color: #f5feff;
+  box-sizing: border-box;
 }
 
 .items-header{
@@ -121,49 +100,54 @@ body {
 }
 
 .item-row{
-  display: grid;
-  grid-template-columns: 72px 1fr 18px; /* Icon | Zahl | Lightpoint */
+  display: flex;
   align-items: center;
-  column-gap: 12px;
-
-  margin-bottom: 14px;
+  gap: clamp(6px, 1vw, 10px);
+  margin-bottom: clamp(12px, 2vw, 25px);
 }
 
 /* Item-Bild in der Box: responsive */
 .item-img{
-  width: 72px;
-  height: 72px;
-  object-fit: contain;
-  display: block;
+   height: clamp(40px, 6vw, 90px);
+  width: auto;
 }
 
 .item-count{
-  justify-self: end;     /* Zahl nach rechts im mittleren Feld */
-  font-size: 18px;
-  font-weight: 800;
+  font-size: clamp(14px, 1.6vw, 20px);
+  font-weight: bold;
 }
 
 .item-sun{
-  justify-self: end;     /* Icon ganz rechts */
-  width: 14px;
-  height: 14px;
-  opacity: 0.95;
+   width: clamp(12px, 1.4vw, 18px);
+  height: clamp(12px, 1.4vw, 18px);
 }
 
 /* Back-Button */
 .btn-back{
-  position: fixed;
-  left: 20px;
-  bottom: 25px;
-  z-index: 50;
+  position: absolute;
+  left: clamp(10px, 1.5vw, 20px);
+  bottom: clamp(10px, 2vw, 25px);
 
-  width: 170px;     
-  text-align: center;
+  /* gleiche Breite wie Panel */
+  width: clamp(150px, 16vw, 210px);
+  height: 44px;
 
-  background: none;
-  box-shadow: none;
+  display: grid;
+  place-items: center;
+
   padding: 0;
-  border: 0;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.12);
+  color: rgba(245,254,255,0.95);
+
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  box-shadow: 0 12px 24px rgba(0,0,0,0.35);
   text-decoration: none;
 }
 
@@ -338,6 +322,33 @@ body {
     bottom: 10px;
   }
 
+  .btn-back{
+    left: 10px;
+    bottom: calc(10px + 46vw); /* falls du Platz brauchst – optional */
+  }
+
+}
+
+body[data-island="Selflove"] .items-panel{
+  position: fixed !important;
+  left: 130px !important;
+  transform: translateX(-50%) !important;
+
+  width: 210px !important;        /* Breite Panel */
+  bottom: 84px !important;        /* Abstand über Back */
+}
+
+body[data-island="Selflove"] .btn-back{
+  position: fixed !important;
+  left: 130px !important;
+  transform: translateX(-50%) !important;
+
+  width: 210px !important;        /* exakt gleiche Breite */
+  height: 44px !important;
+  bottom: 20px !important;
+
+  display: grid !important;
+  place-items: center !important;
 }
 
 .island-label{
