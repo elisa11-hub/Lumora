@@ -108,18 +108,21 @@ body {
 
 /* Item-Bild in der Box: responsive */
 .item-img{
-   height: clamp(40px, 6vw, 90px);
-  width: auto;
+  height: clamp(40px, 6vw, 90px);
+  width: 80px;          /* ← feste Breite */
+  object-fit: contain;
 }
 
 .item-count{
   font-size: clamp(14px, 1.6vw, 20px);
   font-weight: bold;
+  margin-left: auto;
 }
 
 .item-sun{
-   width: clamp(12px, 1.4vw, 18px);
+  width: clamp(12px, 1.4vw, 18px);
   height: clamp(12px, 1.4vw, 18px);
+  margin-left: 6px;
 }
 
 /* Back-Button */
@@ -365,5 +368,6 @@ body[data-island="Selflove"] .btn-back{
 
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
 }
+
 
 
